@@ -11,7 +11,8 @@
     "format:check": "prettier --check .",
     "test:unitaires": "vitest run",
     "test:parcours": "playwright test",
-    "verifier": "npm run format:check && npm run lint && npm run test:unitaires && npm run build"
+    "verifier": "npm run format:check && npm run lint && npm run test:unitaires && npm run build",
+    "images:partage": "node outils/generer-images-partage.mjs"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",

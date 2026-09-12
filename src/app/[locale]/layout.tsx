@@ -6,6 +6,9 @@ import { notFound } from "next/navigation";
 
 import { routing } from "@/i18n/routing";
 import { MARQUE } from "@/lib/marque";
+import { URL_SITE } from "@/lib/site";
+
+import { DonneesStructurees } from "@/components/seo/donnees-structurees";
 
 import "../globals.css";
 
@@ -40,13 +43,38 @@ export async function generateMetadata({
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "meta" });
 
+  const titre = t("titre");
+  const description = t("description");
+
   return {
-    title: t("titre"),
-    description: t("description"),
+    metadataBase: new URL(URL_SITE),
+    title: { default: titre, template: `%s · ${MARQUE.programme}` },
+    description,
+    applicationName: MARQUE.programme,
     alternates: {
       canonical: `/${locale}`,
       languages: Object.fromEntries(routing.locales.map((code) => [code, `/${code}`])),
     },
+    /*
+     * ALODO distribue par bot WhatsApp : un lien partagé y affiche une carte.
+     * L'aperçu n'est donc pas un ornement, c'est la première vue du produit.
+     */
+    openGraph: {
+      type: "website",
+      siteName: MARQUE.programme,
+      locale: locale === "fr" ? "fr_FR" : "en_US",
+      url: `/${locale}`,
+      title: titre,
+      description,
+      images: [{ url: `/partage-${locale}.png`, width: 1200, height: 630, alt: titre }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: titre,
+      description,
+      images: [`/partage-${locale}.png`],
+    },
+    robots: { index: true, follow: true },
   };
 }
 
@@ -78,6 +106,7 @@ export default async function LayoutLangue({
       className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} h-full`}
     >
       <body className="flex min-h-full flex-col">
+        <DonneesStructurees locale={locale} />
         <NextIntlClientProvider>{children}</NextIntlClientProvider>
       </body>
     </html>
