@@ -98,7 +98,7 @@ Les tests de parcours nécessitent le navigateur Playwright : `npx playwright in
 - Point fort, frein principal, recommandation locale exécutable.
 - Avertissement explicite quand le plafond légal contraint le score.
 - Responsive, cibles tactiles de 56 px, aucun débordement horizontal.
-- 43 tests unitaires et 28 tests de parcours.
+- 49 tests unitaires et 28 tests de parcours.
 
 ## 6. Limites
 
