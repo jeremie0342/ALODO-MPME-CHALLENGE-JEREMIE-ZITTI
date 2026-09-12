@@ -1,0 +1,102 @@
+"use client";
+
+import { Check } from "lucide-react";
+
+import { DIMENSIONS, QUESTIONS } from "@/domaine/questionnaire";
+import { estRepondue } from "@/domaine/scoring";
+import type { IdentifiantDimension, Reponses } from "@/domaine/types";
+import { cn } from "@/lib/utils";
+
+interface ProgressionProps {
+  readonly indexCourant: number;
+  readonly reponses: Reponses;
+}
+
+/**
+ * L'utilisateur doit toujours savoir où il en est, sans avoir à compter.
+ * Deux lectures complémentaires : l'avancement global en barre, et l'avancement
+ * par dimension dans le rail, qui montre aussi ce qui reste à venir.
+ */
+export function BarreProgression({ indexCourant }: { readonly indexCourant: number }) {
+  const total = QUESTIONS.length;
+  const rang = indexCourant + 1;
+  // Calé sur le rang et non sur les questions achevées : une barre vide sur la première
+  // question se lit comme une panne, pas comme un départ.
+  const pourcentage = Math.round((rang / total) * 100);
+
+  return (
+    <div className="flex items-center gap-4">
+      <span className="libelle-instrument shrink-0 text-encre-attenue" data-mesure>
+        {String(rang).padStart(2, "0")} / {total}
+      </span>
+
+      <div
+        role="progressbar"
+        aria-valuenow={rang}
+        aria-valuemin={1}
+        aria-valuemax={total}
+        aria-label="Avancement du diagnostic"
+        className="h-1 flex-1 overflow-hidden rounded-full bg-papier-creux"
+      >
+        <div
+          className="h-full bg-signal transition-[width] duration-300 ease-out"
+          style={{ width: `${pourcentage}%` }}
+        />
+      </div>
+    </div>
+  );
+}
+
+export function RailDimensions({ indexCourant, reponses }: ProgressionProps) {
+  const dimensionCourante = QUESTIONS[indexCourant]?.dimension;
+
+  return (
+    <nav aria-label="Dimensions du diagnostic" className="grid gap-px">
+      {DIMENSIONS.map((dimension) => {
+        const questions = QUESTIONS.filter((question) => question.dimension === dimension.id);
+        const repondues = questions.filter((question) => estRepondue(question, reponses)).length;
+
+        const courante = dimension.id === dimensionCourante;
+        const achevee = repondues === questions.length;
+
+        return (
+          <div
+            key={dimension.id}
+            aria-current={courante ? "step" : undefined}
+            className={cn(
+              "border-l-2 border-trait py-3 pl-4 transition-colors",
+              courante ? "border-l-signal" : "border-l-trait",
+            )}
+          >
+            <div className="flex items-center justify-between gap-3">
+              <span
+                className={cn(
+                  "libelle-instrument",
+                  courante ? "text-encre" : "text-encre-discrete",
+                )}
+              >
+                {dimension.nom}
+              </span>
+
+              {achevee ? (
+                <Check className="size-3.5 text-signal" strokeWidth={2.5} aria-hidden="true" />
+              ) : (
+                <span className="font-mono text-[0.6875rem] text-encre-discrete" data-mesure>
+                  {repondues}/{questions.length}
+                </span>
+              )}
+            </div>
+
+            <p className="mt-1 text-xs leading-snug text-encre-discrete">{dimension.enjeu}</p>
+          </div>
+        );
+      })}
+    </nav>
+  );
+}
+
+export function EtiquetteDimension({ dimension }: { readonly dimension: IdentifiantDimension }) {
+  const trouvee = DIMENSIONS.find((entree) => entree.id === dimension);
+
+  return <span className="libelle-instrument text-signal">{trouvee?.nom}</span>;
+}
