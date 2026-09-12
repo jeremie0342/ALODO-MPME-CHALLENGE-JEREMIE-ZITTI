@@ -1,6 +1,7 @@
 import { useTranslations } from "next-intl";
 
 import { Logo } from "@/components/marque/logo";
+import { BasculeTheme } from "@/components/mise-en-page/bascule-theme";
 import { SelecteurLangue } from "@/components/mise-en-page/selecteur-langue";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
@@ -30,6 +31,7 @@ export function EnTete({ children }: { readonly children?: React.ReactNode }) {
         <div className="flex items-center gap-4">
           {children}
           <SelecteurLangue />
+          <BasculeTheme />
         </div>
       </Contenu>
     </header>

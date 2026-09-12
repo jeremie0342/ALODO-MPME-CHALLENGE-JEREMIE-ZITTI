@@ -9,6 +9,12 @@
     "changerLangue": "Change language",
     "pied": "Diagnostic prototype, no data leaves this device"
   },
+  "theme": {
+    "systeme": "System theme",
+    "clair": "Light theme",
+    "sombre": "Dark theme",
+    "basculer": "Change theme, switch to {vers}"
+  },
   "accueil": {
     "surtitre": "Credit readiness diagnostic",
     "titre": "Is your business ready for its first formal loan?",
@@ -51,9 +57,18 @@
     "accueil": "Back to home"
   },
   "dimensions": {
-    "formalisation": { "nom": "Registration", "enjeu": "Is it allowed to borrow?" },
-    "comptabilite": { "nom": "Bookkeeping", "enjeu": "Can it prove its figures?" },
-    "finance": { "nom": "Finances", "enjeu": "Can it afford to repay?" }
+    "formalisation": {
+      "nom": "Registration",
+      "enjeu": "Is it allowed to borrow?"
+    },
+    "comptabilite": {
+      "nom": "Bookkeeping",
+      "enjeu": "Can it prove its figures?"
+    },
+    "finance": {
+      "nom": "Finances",
+      "enjeu": "Can it afford to repay?"
+    }
   },
   "maturite": {
     "critique": "Critical",

@@ -54,6 +54,24 @@ Les chiffres affichés portent `data-mesure`, qui active les chiffres tabulaires
 - Cible tactile de 56 px minimum, ligne entière cliquable.
 - Tout élément actionnable montre un curseur de clic et change visiblement au survol. Tailwind v4 pose `cursor: default` sur les boutons, et les variantes shadcn reposent sur des écarts d'opacité calibrés pour un fond blanc pur : les deux sont repris dans `globals.css`, dans la couche `utilities` sans quoi les utilitaires les écraseraient.
 - Un bouton désactivé montre un curseur d'interdiction et ne réagit pas au survol.
-- Thème clair uniquement. Le diagnostic se remplit de jour, sur un téléphone d'entrée de gamme ; un second thème doublerait la surface à maintenir sans servir l'usage.
+- Deux thèmes, clair et sombre, plus le suivi de la préférence système.
 
 Ces règles sont vérifiées par `tests/unitaires/theme.test.ts`, qui scanne les sources et fait échouer la vérification si une valeur repart en dur.
+
+## Thème sombre
+
+Le projet a d'abord été livré en thème clair seul. Le thème sombre a été ajouté ensuite, pour une raison précise : les jetons étant déjà centralisés, il ne touche **aucun composant**. C'est la démonstration que la centralisation tient.
+
+Ce n'est pas une inversion. Sur fond sombre, l'orange de marque perd en lisibilité et les teintes de maturité s'écrasent : les deux sont remontées en clarté. Les surfaces gardent leur sémantique, « creux » restant en retrait et « relevé » en avant, ce qui inverse leur direction par rapport au thème clair.
+
+| Aspect           | Choix                                                                                                                                  |
+| ---------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| Sélecteur        | `[data-theme="sombre"]` sur `<html>`                                                                                                   |
+| Préférences      | système, clair, sombre, parcourues par un seul bouton                                                                                  |
+| Résolution       | un script pose l'attribut **avant la peinture** ; sans lui la page s'afficherait en clair puis basculerait                             |
+| Sans JavaScript  | thème clair, qui reste le cas d'usage principal                                                                                        |
+| Variante `dark:` | redéfinie pour suivre l'attribut et non la préférence système brute, sinon un choix manuel laisserait les primitives shadcn en arrière |
+
+### Le logo
+
+La boucle sombre du logo disparaît sur fond sombre : seul l'anneau orange resterait visible. Un filtre CSS altérerait aussi l'orange, donc une variante est produite par `outils/generer-logo-sombre.mjs`, qui ne recolore que les pixels neutres et conserve le canal alpha. Les deux images sont rendues et permutées en CSS, ce qui évite tout clignotement.

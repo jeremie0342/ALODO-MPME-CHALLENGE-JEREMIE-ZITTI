@@ -9,6 +9,12 @@
     "changerLangue": "Changer de langue",
     "pied": "Prototype de diagnostic, données non conservées hors de cet appareil"
   },
+  "theme": {
+    "systeme": "Thème du système",
+    "clair": "Thème clair",
+    "sombre": "Thème sombre",
+    "basculer": "Changer de thème, passer au {vers}"
+  },
   "accueil": {
     "surtitre": "Diagnostic de préparation au crédit",
     "titre": "Votre entreprise est-elle prête à obtenir son premier crédit formel ?",
@@ -51,9 +57,18 @@
     "accueil": "Retour à l'accueil"
   },
   "dimensions": {
-    "formalisation": { "nom": "Formalisation", "enjeu": "A-t-elle le droit d'emprunter ?" },
-    "comptabilite": { "nom": "Comptabilité", "enjeu": "Peut-elle le prouver ?" },
-    "finance": { "nom": "Finance", "enjeu": "En a-t-elle la capacité ?" }
+    "formalisation": {
+      "nom": "Formalisation",
+      "enjeu": "A-t-elle le droit d'emprunter ?"
+    },
+    "comptabilite": {
+      "nom": "Comptabilité",
+      "enjeu": "Peut-elle le prouver ?"
+    },
+    "finance": {
+      "nom": "Finance",
+      "enjeu": "En a-t-elle la capacité ?"
+    }
   },
   "maturite": {
     "critique": "Critique",

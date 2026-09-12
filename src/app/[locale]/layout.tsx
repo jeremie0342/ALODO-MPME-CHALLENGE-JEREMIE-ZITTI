@@ -7,6 +7,7 @@ import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { MARQUE } from "@/lib/marque";
 import { URL_SITE } from "@/lib/site";
+import { SCRIPT_ANTI_CLIGNOTEMENT } from "@/etat/theme";
 
 import { DonneesStructurees } from "@/components/seo/donnees-structurees";
 
@@ -105,6 +106,11 @@ export default async function LayoutLangue({
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} h-full`}
     >
+      <head>
+        {/* Pose le thème avant la peinture : sans cela la page s'afficherait en clair
+            puis basculerait, ce qui est pire que de ne pas proposer de thème sombre. */}
+        <script dangerouslySetInnerHTML={{ __html: SCRIPT_ANTI_CLIGNOTEMENT }} />
+      </head>
       <body className="flex min-h-full flex-col">
         <DonneesStructurees locale={locale} />
         <NextIntlClientProvider>{children}</NextIntlClientProvider>
