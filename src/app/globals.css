@@ -1,0 +1,152 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+/*
+  Source unique du thème.
+  Aucune couleur, graisse ou rayon ne doit être écrit en dur dans un composant :
+  tout passe par les jetons déclarés ici.
+*/
+
+@theme inline {
+  /* Surfaces */
+  --color-papier: var(--papier);
+  --color-papier-creux: var(--papier-creux);
+  --color-papier-releve: var(--papier-releve);
+
+  /* Texte */
+  --color-encre: var(--encre);
+  --color-encre-attenue: var(--encre-attenue);
+  --color-encre-discrete: var(--encre-discrete);
+
+  /* Traits */
+  --color-trait: var(--trait);
+  --color-trait-appuye: var(--trait-appuye);
+
+  /* Signal de marque */
+  --color-signal: var(--signal);
+  --color-signal-sourd: var(--signal-sourd);
+  --color-signal-profond: var(--signal-profond);
+
+  /* Niveaux de maturité */
+  --color-niveau-critique: var(--niveau-critique);
+  --color-niveau-fragile: var(--niveau-fragile);
+  --color-niveau-engage: var(--niveau-engage);
+  --color-niveau-solide: var(--niveau-solide);
+
+  /* Familles typographiques */
+  --font-display: var(--font-instrument-serif), Georgia, serif;
+  --font-sans: var(--font-geist-sans), system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-heading: var(--font-instrument-serif), Georgia, serif;
+
+  /* Échelle typographique display */
+  --text-mesure: 4.5rem;
+  --text-mesure--line-height: 0.9;
+  --text-mesure--letter-spacing: -0.03em;
+  --text-mesure-xl: 7rem;
+  --text-mesure-xl--line-height: 0.85;
+  --text-mesure-xl--letter-spacing: -0.035em;
+
+  /* Rythme vertical des sections */
+  --spacing-section: 5rem;
+  --spacing-section-lg: 8rem;
+
+  /* Jetons shadcn remappés sur la palette de marque */
+  --color-background: var(--papier);
+  --color-foreground: var(--encre);
+  --color-card: var(--papier-releve);
+  --color-card-foreground: var(--encre);
+  --color-popover: var(--papier-releve);
+  --color-popover-foreground: var(--encre);
+  --color-primary: var(--encre);
+  --color-primary-foreground: var(--papier);
+  --color-secondary: var(--papier-creux);
+  --color-secondary-foreground: var(--encre);
+  --color-muted: var(--papier-creux);
+  --color-muted-foreground: var(--encre-attenue);
+  --color-accent: var(--signal-sourd);
+  --color-accent-foreground: var(--signal-profond);
+  --color-destructive: var(--niveau-critique);
+  --color-border: var(--trait);
+  --color-input: var(--trait-appuye);
+  --color-ring: var(--signal);
+
+  --radius-sm: calc(var(--radius) * 0.5);
+  --radius-md: calc(var(--radius) * 0.75);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.5);
+  --radius-2xl: calc(var(--radius) * 2);
+}
+
+:root {
+  /*
+    Valeurs de marque relevées sur le logo ALODO :
+    orange #EB663B et noir #030303, convertis en OKLCH.
+  */
+  --marque-signal: oklch(0.6687 0.1748 38.06);
+  --marque-noir: oklch(0.0969 0 0);
+
+  /* Surfaces : papier chaud plutôt que blanc pur, moins agressif en plein jour */
+  --papier: oklch(0.9834 0.0033 78);
+  --papier-creux: oklch(0.9612 0.0048 78);
+  --papier-releve: oklch(1 0 0);
+
+  /* Texte : noir de marque réchauffé et éclairci pour rester lisible sur écran bas de gamme */
+  --encre: oklch(0.1774 0.0089 55);
+  --encre-attenue: oklch(0.4881 0.0128 62);
+  --encre-discrete: oklch(0.6542 0.0113 68);
+
+  /* Traits : filets fins, jamais d'ombre portée */
+  --trait: oklch(0.8921 0.0055 75);
+  --trait-appuye: oklch(0.8156 0.0088 72);
+
+  /* Signal : accent unique, réservé à ce qui demande une action ou porte une mesure */
+  --signal: var(--marque-signal);
+  --signal-sourd: oklch(0.9432 0.0248 48);
+  --signal-profond: oklch(0.5421 0.1621 35);
+
+  /*
+    Niveaux de maturité : la teinte pivote de 29 à 196 à mesure que le score monte.
+    Progression systématique, pas quatre couleurs choisies séparément.
+  */
+  --niveau-critique: oklch(0.5108 0.1583 29);
+  --niveau-fragile: oklch(0.6687 0.1748 38.06);
+  --niveau-engage: oklch(0.5804 0.0782 110);
+  --niveau-solide: oklch(0.5242 0.0871 196);
+
+  /* Angles serrés : l'interface se lit comme un instrument, pas comme une carte de marketing */
+  --radius: 0.25rem;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    @apply font-sans;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-papier text-encre antialiased;
+    font-synthesis-weight: none;
+  }
+
+  /* Les chiffres s'alignent en colonne partout où une mesure est affichée */
+  [data-mesure] {
+    font-variant-numeric: tabular-nums;
+  }
+
+  ::selection {
+    @apply bg-signal-sourd text-signal-profond;
+  }
+}
+
+@layer utilities {
+  /* Libellé d'instrument : capitales espacées en mono, pour les métadonnées et les compteurs */
+  .libelle-instrument {
+    @apply font-mono text-[0.6875rem] tracking-[0.18em] uppercase;
+  }
+}
