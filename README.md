@@ -2,6 +2,8 @@
 
 Prototype de l'étape Diagnostic du programme ALODO MPME. Dix questions, un score, une action à mener.
 
+**Démo : https://alodo-mpme-challenge-jeremie-zitti.vercel.app**
+
 ## 1. Présentation
 
 Une application web de trois écrans qui évalue la capacité d'une micro, petite ou moyenne entreprise à obtenir un **premier crédit formel**.
@@ -87,6 +89,12 @@ npm run test:parcours   # bout en bout, bureau et mobile
 ```
 
 Les tests de parcours nécessitent le navigateur Playwright : `npx playwright install chromium`.
+
+Pour rejouer les mêmes scénarios contre un déploiement plutôt qu'en local :
+
+```bash
+URL_CIBLE=https://alodo-mpme-challenge-jeremie-zitti.vercel.app npm run test:parcours
+```
 
 ## 5. Fonctionnalités
 

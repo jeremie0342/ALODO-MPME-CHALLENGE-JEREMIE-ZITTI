@@ -12,6 +12,8 @@
 
 `npm run test:parcours` construit et sert l'application automatiquement.
 
+En renseignant `URL_CIBLE`, la suite se joue contre un déploiement existant au lieu du serveur local, ce qui permet de vérifier une mise en ligne avec exactement les mêmes scénarios.
+
 ## Tests unitaires
 
 ### Moteur de score, `tests/unitaires/scoring.test.ts`
