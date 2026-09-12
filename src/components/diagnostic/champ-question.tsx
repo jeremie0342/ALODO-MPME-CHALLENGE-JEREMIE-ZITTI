@@ -70,10 +70,9 @@ function LigneOption({ option, coche, multiple, onActiver }: LigneOptionProps) {
       htmlFor={identifiant}
       data-coche={coche || undefined}
       className={cn(
-        "group/field-label flex min-h-14 cursor-pointer items-center gap-3.5 rounded-md border border-trait bg-papier-releve px-4 py-3.5 transition-colors",
-        "hover:border-trait-appuye",
+        "group/field-label flex min-h-14 items-center gap-3.5 rounded-md border border-trait bg-papier-releve px-4 py-3.5 transition-colors",
         "has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-signal has-[:focus-visible]:ring-offset-2",
-        coche && "border-signal bg-signal-sourd",
+        coche ? "border-signal bg-signal-sourd" : "hover:border-trait-appuye hover:bg-survol",
       )}
     >
       {multiple ? (

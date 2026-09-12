@@ -23,6 +23,10 @@
   --color-trait: var(--trait);
   --color-trait-appuye: var(--trait-appuye);
 
+  /* Survol */
+  --color-survol: var(--survol);
+  --color-encre-survol: var(--encre-survol);
+
   /* Signal de marque */
   --color-signal: var(--signal);
   --color-signal-sourd: var(--signal-sourd);
@@ -101,6 +105,14 @@
   --trait: oklch(0.8921 0.0055 75);
   --trait-appuye: oklch(0.8156 0.0088 72);
 
+  /*
+    Surfaces de survol. Les variantes shadcn reposent sur des écarts d'opacité
+    calibrés pour un fond blanc pur ; sur cette palette claire l'écart devient
+    invisible. Ces deux jetons donnent un retour franc, sur fond clair et sur fond sombre.
+  */
+  --survol: oklch(0.9214 0.0062 78);
+  --encre-survol: oklch(0.2854 0.0128 55);
+
   /* Signal : accent unique, réservé à ce qui demande une action ou porte une mesure */
   --signal: var(--marque-signal);
   --signal-sourd: oklch(0.9432 0.0248 48);
@@ -141,6 +153,57 @@
 
   ::selection {
     @apply bg-signal-sourd text-signal-profond;
+  }
+}
+
+/*
+  Ces surcharges vivent dans la couche utilities et non components : dans Tailwind v4
+  les utilitaires l'emportent sur les composants, et les variantes shadcn sont écrites
+  en utilitaires. Placées plus bas, elles seraient silencieusement ignorées.
+*/
+@layer utilities {
+  /*
+    Tailwind v4 pose cursor: default sur les boutons. Sans cette reprise, rien
+    ne signale qu'un élément est cliquable au survol.
+  */
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  label[for] {
+    cursor: pointer;
+  }
+
+  /*
+    Un bouton désactivé garde ses événements de pointeur pour afficher le curseur
+    d'interdiction. Un bouton disabled ne déclenche pas de clic de toute façon,
+    et sans ce retour l'utilisateur ne comprend pas pourquoi rien ne se passe.
+  */
+  [data-slot="button"]:disabled {
+    pointer-events: auto;
+    cursor: not-allowed;
+  }
+
+  /* États de survol repris sur les jetons dédiés, assez francs pour se voir. */
+  [data-slot="button"][data-variant="default"]:not(:disabled):hover {
+    background-color: var(--encre-survol);
+  }
+
+  [data-slot="button"][data-variant="ghost"]:not(:disabled):hover,
+  [data-slot="button"][data-variant="outline"]:not(:disabled):hover {
+    background-color: var(--survol);
+    color: var(--encre);
+  }
+
+  /*
+    Contrepartie de la réactivation des événements de pointeur : sans cela un bouton
+    désactivé réagirait encore au survol et se ferait passer pour cliquable.
+  */
+  [data-slot="button"][data-variant="default"]:disabled:hover {
+    background-color: var(--encre);
+  }
+
+  [data-slot="button"][data-variant="ghost"]:disabled:hover,
+  [data-slot="button"][data-variant="outline"]:disabled:hover {
+    background-color: transparent;
   }
 }
 

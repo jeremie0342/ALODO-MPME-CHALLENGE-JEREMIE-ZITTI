@@ -50,7 +50,7 @@ export function BoutonDemarrage() {
           <button
             type="button"
             onClick={recommencer}
-            className="cursor-pointer rounded-sm text-encre-attenue underline underline-offset-4 transition-colors hover:text-encre focus-visible:ring-2 focus-visible:ring-signal focus-visible:outline-none"
+            className="rounded-sm text-encre-attenue underline underline-offset-4 transition-colors hover:text-encre focus-visible:ring-2 focus-visible:ring-signal focus-visible:outline-none"
           >
             Recommencer à zéro
           </button>

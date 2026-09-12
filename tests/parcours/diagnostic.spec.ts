@@ -210,6 +210,78 @@ test.describe("sortie et reprise", () => {
   });
 });
 
+test.describe("retours d'interaction", () => {
+  test("affiche un curseur de clic sur les boutons actifs", async ({ page }) => {
+    await page.goto("/diagnostic");
+    await page.locator("label").first().click();
+
+    const curseur = await page
+      .getByRole("button", { name: "Continuer" })
+      .evaluate((element) => getComputedStyle(element).cursor);
+
+    expect(curseur).toBe("pointer");
+  });
+
+  test("signale un bouton desactive par un curseur d'interdiction", async ({ page }) => {
+    await page.goto("/diagnostic");
+
+    const bouton = page.getByRole("button", { name: "Continuer" });
+    await expect(bouton).toBeDisabled();
+
+    const curseur = await bouton.evaluate((element) => getComputedStyle(element).cursor);
+
+    expect(curseur).toBe("not-allowed");
+  });
+});
+
+// Un ecran tactile n'a pas d'etat de survol : ces verifications n'ont de sens
+// que sur un pointeur fin.
+test.describe("survol", () => {
+  test.skip(({ isMobile }) => Boolean(isMobile), "Le survol n'existe pas sur ecran tactile");
+
+  test("change visiblement l'apparence d'un bouton", async ({ page }) => {
+    await page.goto("/diagnostic");
+    await page.locator("label").first().click();
+
+    const bouton = page.getByRole("button", { name: "Continuer" });
+    const avant = await bouton.evaluate((element) => getComputedStyle(element).backgroundColor);
+
+    await bouton.hover();
+    await page.waitForTimeout(300);
+
+    const apres = await bouton.evaluate((element) => getComputedStyle(element).backgroundColor);
+
+    expect(apres).not.toBe(avant);
+  });
+
+  test("change visiblement l'apparence d'une option", async ({ page }) => {
+    await page.goto("/diagnostic");
+
+    const option = page.locator("label").first();
+    const avant = await option.evaluate((element) => getComputedStyle(element).backgroundColor);
+
+    await option.hover();
+    await page.waitForTimeout(300);
+
+    const apres = await option.evaluate((element) => getComputedStyle(element).backgroundColor);
+
+    expect(apres).not.toBe(avant);
+  });
+  test("ne fait pas reagir un bouton desactive au survol", async ({ page }) => {
+    await page.goto("/diagnostic");
+
+    const bouton = page.getByRole("button", { name: "Continuer" });
+    await expect(bouton).toBeDisabled();
+
+    const avant = await bouton.evaluate((element) => getComputedStyle(element).backgroundColor);
+    await bouton.hover({ force: true });
+    await page.waitForTimeout(300);
+    const apres = await bouton.evaluate((element) => getComputedStyle(element).backgroundColor);
+
+    expect(apres).toBe(avant);
+  });
+});
+
 test.describe("lisibilité", () => {
   test("ne provoque aucun débordement horizontal", async ({ page }) => {
     await page.goto("/diagnostic");

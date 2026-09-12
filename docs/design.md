@@ -22,6 +22,7 @@ Le noir de marque n'est pas utilisé tel quel pour le texte : il est réchauffé
 | `--papier`, `--papier-creux`, `--papier-releve`  | Surfaces, du fond au premier plan                                      |
 | `--encre`, `--encre-attenue`, `--encre-discrete` | Texte, par ordre d'importance                                          |
 | `--trait`, `--trait-appuye`                      | Filets                                                                 |
+| `--survol`, `--encre-survol`                     | Surfaces de survol, sur fond clair et sur fond sombre                  |
 | `--signal`, `--signal-sourd`, `--signal-profond` | Accent unique, réservé à ce qui demande une action ou porte une mesure |
 | `--niveau-critique` à `--niveau-solide`          | Niveaux de maturité                                                    |
 
@@ -51,6 +52,8 @@ Les chiffres affichés portent `data-mesure`, qui active les chiffres tabulaires
 - Aucune couleur écrite en dur dans un composant. Tout passe par un jeton de `src/app/globals.css`.
 - Aucun dégradé.
 - Cible tactile de 56 px minimum, ligne entière cliquable.
+- Tout élément actionnable montre un curseur de clic et change visiblement au survol. Tailwind v4 pose `cursor: default` sur les boutons, et les variantes shadcn reposent sur des écarts d'opacité calibrés pour un fond blanc pur : les deux sont repris dans `globals.css`, dans la couche `utilities` sans quoi les utilitaires les écraseraient.
+- Un bouton désactivé montre un curseur d'interdiction et ne réagit pas au survol.
 - Thème clair uniquement. Le diagnostic se remplit de jour, sur un téléphone d'entrée de gamme ; un second thème doublerait la surface à maintenir sans servir l'usage.
 
 Ces règles sont vérifiées par `tests/unitaires/theme.test.ts`, qui scanne les sources et fait échouer la vérification si une valeur repart en dur.
