@@ -1,6 +1,8 @@
-import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 import { Logo } from "@/components/marque/logo";
+import { SelecteurLangue } from "@/components/mise-en-page/selecteur-langue";
+import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 
 /** Largeur de lecture commune à tous les écrans, pour que la mise en page ne dérive pas. */
@@ -24,19 +26,23 @@ export function EnTete({ children }: { readonly children?: React.ReactNode }) {
         >
           <Logo />
         </Link>
-        {children}
+
+        <div className="flex items-center gap-4">
+          {children}
+          <SelecteurLangue />
+        </div>
       </Contenu>
     </header>
   );
 }
 
 export function PiedDePage() {
+  const t = useTranslations("commun");
+
   return (
     <footer className="mt-auto border-t border-trait">
       <Contenu className="flex flex-col gap-1 py-6">
-        <p className="libelle-instrument text-encre-discrete">
-          Prototype de diagnostic, données non conservées hors de cet appareil
-        </p>
+        <p className="libelle-instrument text-encre-discrete">{t("pied")}</p>
       </Contenu>
     </footer>
   );

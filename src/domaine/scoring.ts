@@ -168,7 +168,6 @@ export function identifierFrein(reponses: Reponses): Frein {
   const ecarts = questionsNotees()
     .map((question) => ({
       questionId: question.id,
-      intitule: question.intitule,
       dimension: question.dimension,
       ecartPondere:
         (question.pointsMax - pointsQuestion(question, reponses[question.id] ?? [])) *

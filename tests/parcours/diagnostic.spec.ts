@@ -1,5 +1,9 @@
 import { expect, test, type Page } from "@playwright/test";
 
+/** Les routes sont prefixees par la langue. Le parcours de reference est joue en francais. */
+const FR = "/fr";
+const EN = "/en";
+
 /**
  * Parcours de bout en bout, joué sur bureau et sur mobile.
  * Ces tests cadrent ce que le PDF exige : un parcours complet, une progression
@@ -20,7 +24,7 @@ async function continuer(page: Page) {
 
 /** Joue les dix questions en retenant toujours la première option proposée. */
 async function parcoursComplet(page: Page) {
-  await page.goto("/diagnostic");
+  await page.goto(`${FR}/diagnostic`);
 
   for (let rang = 0; rang < 10; rang += 1) {
     await page.locator("label").first().click();
@@ -38,7 +42,7 @@ async function parcoursComplet(page: Page) {
 
 test.describe("accueil", () => {
   test("présente l'objectif, la durée et le bouton de départ", async ({ page }) => {
-    await page.goto("/");
+    await page.goto(FR);
 
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
     await expect(page.getByText("10 questions")).toBeVisible();
@@ -47,7 +51,7 @@ test.describe("accueil", () => {
   });
 
   test("annonce les trois dimensions évaluées", async ({ page }) => {
-    await page.goto("/");
+    await page.goto(FR);
 
     for (const dimension of ["Formalisation", "Comptabilité", "Finance"]) {
       await expect(page.getByRole("heading", { name: dimension })).toBeVisible();
@@ -55,16 +59,16 @@ test.describe("accueil", () => {
   });
 
   test("mène au diagnostic", async ({ page }) => {
-    await page.goto("/");
+    await page.goto(FR);
     await page.getByRole("link", { name: /Commencer le diagnostic/ }).click();
 
-    await expect(page).toHaveURL(/\/diagnostic$/);
+    await expect(page).toHaveURL(/\/fr\/diagnostic$/);
   });
 });
 
 test.describe("parcours de questions", () => {
   test("bloque l'avancement tant que la question n'a pas de réponse", async ({ page }) => {
-    await page.goto("/diagnostic");
+    await page.goto(`${FR}/diagnostic`);
 
     const continuerBouton = page.getByRole("button", { name: "Continuer" });
     await expect(continuerBouton).toBeDisabled();
@@ -74,7 +78,7 @@ test.describe("parcours de questions", () => {
   });
 
   test("affiche en permanence la position dans le parcours", async ({ page }) => {
-    await page.goto("/diagnostic");
+    await page.goto(`${FR}/diagnostic`);
 
     await expect(page.getByText("01 / 10")).toBeVisible();
     await expect(page.getByRole("progressbar")).toBeVisible();
@@ -86,7 +90,7 @@ test.describe("parcours de questions", () => {
   });
 
   test("permet de revenir en arrière sans perdre sa réponse", async ({ page }) => {
-    await page.goto("/diagnostic");
+    await page.goto(`${FR}/diagnostic`);
 
     await repondre(page, "J'ai un RCCM et un IFU");
     await continuer(page);
@@ -97,7 +101,7 @@ test.describe("parcours de questions", () => {
   });
 
   test("attend la sous-question avant de laisser continuer", async ({ page }) => {
-    await page.goto("/diagnostic");
+    await page.goto(`${FR}/diagnostic`);
 
     // Les cinq premières questions mènent à la question du bénéfice.
     for (let rang = 0; rang < 5; rang += 1) {
@@ -116,7 +120,7 @@ test.describe("parcours de questions", () => {
   });
 
   test("conserve les réponses après un rechargement", async ({ page }) => {
-    await page.goto("/diagnostic");
+    await page.goto(`${FR}/diagnostic`);
 
     await repondre(page, "J'ai un RCCM et un IFU");
     await continuer(page);
@@ -153,24 +157,24 @@ test.describe("résultat", () => {
   test("permet de recommencer", async ({ page }) => {
     await page.getByRole("button", { name: /Refaire le diagnostic/ }).click();
 
-    await expect(page).toHaveURL(/\/diagnostic$/);
+    await expect(page).toHaveURL(/\/fr\/diagnostic$/);
     await expect(page.getByText("01 / 10")).toBeVisible();
   });
 });
 
 test.describe("sortie et reprise", () => {
   test("permet de quitter le questionnaire à tout moment", async ({ page }) => {
-    await page.goto("/diagnostic");
+    await page.goto(`${FR}/diagnostic`);
 
     const sortie = page.getByRole("link", { name: /Reprendre plus tard|Quitter le diagnostic/ });
     await expect(sortie).toBeVisible();
 
     await sortie.click();
-    await expect(page).toHaveURL(/\/$/);
+    await expect(page).toHaveURL(/\/fr$/);
   });
 
   test("propose de reprendre là où l'utilisateur s'est arrêté", async ({ page }) => {
-    await page.goto("/diagnostic");
+    await page.goto(`${FR}/diagnostic`);
     await page.locator("label").first().click();
     await continuer(page);
     await page.getByRole("link", { name: /Reprendre plus tard|Quitter le diagnostic/ }).click();
@@ -180,7 +184,7 @@ test.describe("sortie et reprise", () => {
   });
 
   test("reprend exactement à la question quittée", async ({ page }) => {
-    await page.goto("/diagnostic");
+    await page.goto(`${FR}/diagnostic`);
     await page.locator("label").first().click();
     await continuer(page);
     await page.getByRole("link", { name: /Reprendre plus tard|Quitter le diagnostic/ }).click();
@@ -190,20 +194,20 @@ test.describe("sortie et reprise", () => {
   });
 
   test("permet de repartir de zéro depuis l'accueil", async ({ page }) => {
-    await page.goto("/diagnostic");
+    await page.goto(`${FR}/diagnostic`);
     await page.locator("label").first().click();
     await continuer(page);
     await page.getByRole("link", { name: /Reprendre plus tard|Quitter le diagnostic/ }).click();
 
     await page.getByRole("button", { name: /Recommencer à zéro/ }).click();
 
-    await expect(page).toHaveURL(/\/diagnostic$/);
+    await expect(page).toHaveURL(/\/fr\/diagnostic$/);
     await expect(page.getByText("01 / 10")).toBeVisible();
     await expect(page.getByRole("radio", { checked: true })).toHaveCount(0);
   });
 
   test("n'affiche aucune reprise avant le premier passage", async ({ page }) => {
-    await page.goto("/");
+    await page.goto(FR);
 
     await expect(page.getByRole("link", { name: /Commencer le diagnostic/ })).toBeVisible();
     await expect(page.getByRole("button", { name: /Recommencer à zéro/ })).toHaveCount(0);
@@ -212,7 +216,7 @@ test.describe("sortie et reprise", () => {
 
 test.describe("retours d'interaction", () => {
   test("affiche un curseur de clic sur les boutons actifs", async ({ page }) => {
-    await page.goto("/diagnostic");
+    await page.goto(`${FR}/diagnostic`);
     await page.locator("label").first().click();
 
     const curseur = await page
@@ -223,7 +227,7 @@ test.describe("retours d'interaction", () => {
   });
 
   test("signale un bouton desactive par un curseur d'interdiction", async ({ page }) => {
-    await page.goto("/diagnostic");
+    await page.goto(`${FR}/diagnostic`);
 
     const bouton = page.getByRole("button", { name: "Continuer" });
     await expect(bouton).toBeDisabled();
@@ -240,7 +244,7 @@ test.describe("survol", () => {
   test.skip(({ isMobile }) => Boolean(isMobile), "Le survol n'existe pas sur ecran tactile");
 
   test("change visiblement l'apparence d'un bouton", async ({ page }) => {
-    await page.goto("/diagnostic");
+    await page.goto(`${FR}/diagnostic`);
     await page.locator("label").first().click();
 
     const bouton = page.getByRole("button", { name: "Continuer" });
@@ -255,7 +259,7 @@ test.describe("survol", () => {
   });
 
   test("change visiblement l'apparence d'une option", async ({ page }) => {
-    await page.goto("/diagnostic");
+    await page.goto(`${FR}/diagnostic`);
 
     const option = page.locator("label").first();
     const avant = await option.evaluate((element) => getComputedStyle(element).backgroundColor);
@@ -268,7 +272,7 @@ test.describe("survol", () => {
     expect(apres).not.toBe(avant);
   });
   test("ne fait pas reagir un bouton desactive au survol", async ({ page }) => {
-    await page.goto("/diagnostic");
+    await page.goto(`${FR}/diagnostic`);
 
     const bouton = page.getByRole("button", { name: "Continuer" });
     await expect(bouton).toBeDisabled();
@@ -282,9 +286,90 @@ test.describe("survol", () => {
   });
 });
 
+test.describe("bilingue", () => {
+  // La racine ne force pas une langue : elle negocie avec le navigateur et retombe
+  // sur le francais, langue du marche de depart, quand aucune preference ne correspond.
+  test.describe("navigateur francophone", () => {
+    test.use({ locale: "fr-FR" });
+
+    test("ouvre le diagnostic en francais", async ({ page }) => {
+      await page.goto("/");
+
+      await expect(page).toHaveURL(/\/fr$/);
+    });
+  });
+
+  test.describe("navigateur anglophone", () => {
+    test.use({ locale: "en-US" });
+
+    test("ouvre le diagnostic en anglais", async ({ page }) => {
+      await page.goto("/");
+
+      await expect(page).toHaveURL(/\/en$/);
+    });
+  });
+
+  test("sert l'accueil en anglais", async ({ page }) => {
+    await page.goto(EN);
+
+    await expect(page.getByRole("heading", { level: 1 })).toContainText("first formal loan");
+    await expect(page.getByRole("link", { name: /Start the diagnostic/ })).toBeVisible();
+    await expect(page.locator("html")).toHaveAttribute("lang", "en");
+  });
+
+  test("traduit les questions et les options", async ({ page }) => {
+    await page.goto(`${EN}/diagnostic`);
+
+    await expect(page.getByRole("heading", { level: 1 })).toContainText("officially registered");
+    await expect(page.getByText("I have only one of the two")).toBeVisible();
+  });
+
+  test("bascule d'une langue a l'autre en restant sur le meme ecran", async ({ page }) => {
+    await page.goto(`${FR}/diagnostic`);
+    await page.getByRole("link", { name: "en", exact: true }).click();
+
+    await expect(page).toHaveURL(/\/en\/diagnostic$/);
+    await expect(page.getByRole("heading", { level: 1 })).toContainText("officially registered");
+  });
+
+  test("conserve les reponses au changement de langue", async ({ page }) => {
+    await page.goto(`${FR}/diagnostic`);
+    await page.locator("label").first().click();
+    await continuer(page);
+    await expect(page.getByText("02 / 10")).toBeVisible();
+
+    await page.getByRole("link", { name: "en", exact: true }).click();
+
+    await expect(page).toHaveURL(/\/en\/diagnostic$/);
+    await expect(page.getByText("02 / 10")).toBeVisible();
+  });
+
+  test("declare les deux langues aux moteurs de recherche", async ({ page }) => {
+    await page.goto(FR);
+
+    await expect(page.locator('link[rel="alternate"][hreflang="fr"]')).toHaveCount(1);
+    await expect(page.locator('link[rel="alternate"][hreflang="en"]')).toHaveCount(1);
+  });
+
+  test("traduit l'ecran de resultat", async ({ page }) => {
+    await page.goto(`${EN}/diagnostic`);
+
+    for (let rang = 0; rang < 10; rang += 1) {
+      await page.locator("label").first().click();
+      const sous = page.locator("section label").first();
+      if (await sous.isVisible().catch(() => false)) await sous.click();
+      await page.getByRole("button", { name: /Continue|See my result/ }).click();
+    }
+
+    await page.waitForURL("**/en/diagnostic/resultat");
+    await expect(page.getByText("Your strongest area")).toBeVisible();
+    await expect(page.getByText("Do this week")).toBeVisible();
+  });
+});
+
 test.describe("lisibilité", () => {
   test("ne provoque aucun débordement horizontal", async ({ page }) => {
-    await page.goto("/diagnostic");
+    await page.goto(`${FR}/diagnostic`);
 
     const debordement = await page.evaluate(
       () => document.documentElement.scrollWidth > document.documentElement.clientWidth + 1,
@@ -294,7 +379,7 @@ test.describe("lisibilité", () => {
   });
 
   test("expose un titre unique par écran", async ({ page }) => {
-    await page.goto("/diagnostic");
+    await page.goto(`${FR}/diagnostic`);
 
     await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
   });

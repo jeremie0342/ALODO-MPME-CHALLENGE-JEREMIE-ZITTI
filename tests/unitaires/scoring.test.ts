@@ -251,12 +251,16 @@ describe("frein principal", () => {
     expect(frein.questionId).toBe("q9-coussin");
   });
 
-  it("produit une recommandation actionnable", () => {
-    const { recommandation } = calculerResultat(COMMERCE_DETAIL);
+  it("designe une recommandation par sa cle", () => {
+    const { recommandation, frein } = calculerResultat(COMMERCE_DETAIL);
 
-    expect(recommandation.titre.length).toBeGreaterThan(0);
-    expect(recommandation.action.length).toBeGreaterThan(0);
-    expect(recommandation.justification.length).toBeGreaterThan(0);
+    expect(recommandation).toBe(`${frein.questionId}.defaut`);
+  });
+
+  it("choisit la variante propre a une reponse quand elle existe", () => {
+    const { recommandation } = calculerResultat({ ...PARFAIT, "q1-enregistrement": ["aucun"] });
+
+    expect(recommandation).toBe("q1-enregistrement.aucun");
   });
 });
 

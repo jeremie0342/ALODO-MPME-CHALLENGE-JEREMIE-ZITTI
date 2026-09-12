@@ -1,10 +1,10 @@
 "use client";
 
-import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 import { RotateCcw } from "lucide-react";
 
+import { SqueletteQuestion } from "@/components/diagnostic/squelette";
 import { Contenu, EnTete, PiedDePage } from "@/components/mise-en-page/cadre";
 import {
   AvertissementPlafond,
@@ -16,8 +16,10 @@ import {
 } from "@/components/resultat/affichage";
 import { Button } from "@/components/ui/button";
 import { useDiagnostic } from "@/etat/contexte-diagnostic";
+import { Link, useRouter } from "@/i18n/navigation";
 
 export default function PageResultat() {
+  const t = useTranslations("resultat");
   const router = useRouter();
   const { resultat, reponses, pret, recommencer } = useDiagnostic();
 
@@ -31,7 +33,7 @@ export default function PageResultat() {
     return (
       <>
         <EnTete />
-        <main className="flex-1" aria-busy="true" />
+        <SqueletteQuestion />
       </>
     );
   }
@@ -42,7 +44,7 @@ export default function PageResultat() {
 
       <main className="flex-1">
         <Contenu className="py-12 sm:py-16">
-          <p className="libelle-instrument text-encre-discrete">Résultat du diagnostic</p>
+          <p className="libelle-instrument text-encre-discrete">{t("surtitre")}</p>
 
           <div className="mt-8">
             <MesureScore resultat={resultat} />
@@ -54,15 +56,11 @@ export default function PageResultat() {
 
           <div className="mt-12 grid gap-12 border-t border-trait pt-12 lg:grid-cols-[1fr_1.15fr] lg:gap-16">
             <section>
-              <h2 className="libelle-instrument mb-6 text-encre-discrete">Par dimension</h2>
+              <h2 className="libelle-instrument mb-6 text-encre-discrete">{t("parDimension")}</h2>
               <DetailDimensions dimensions={resultat.dimensions} />
 
               {resultat.coefficientConfiance < 1 && (
-                <p className="mt-8 text-sm leading-relaxed text-encre-attenue">
-                  Votre note financière est ajustée parce que vos chiffres ne s&apos;appuient pas
-                  sur des écrits. Le même résultat, tiré de registres, compterait pour sa valeur
-                  pleine.
-                </p>
+                <p className="mt-8 text-sm leading-relaxed text-encre-attenue">{t("decote")}</p>
               )}
             </section>
 
@@ -77,13 +75,13 @@ export default function PageResultat() {
           </div>
 
           <div className="mt-12 flex flex-wrap items-center gap-3 border-t border-trait pt-8">
-            <Button variant="outline" onClick={recommencer} asChild={false}>
+            <Button variant="outline" onClick={recommencer}>
               <RotateCcw className="size-4" strokeWidth={2} aria-hidden="true" />
-              Refaire le diagnostic
+              {t("refaire")}
             </Button>
 
             <Button variant="ghost" asChild className="text-encre-attenue">
-              <Link href="/">Retour à l&apos;accueil</Link>
+              <Link href="/">{t("accueil")}</Link>
             </Button>
           </div>
         </Contenu>

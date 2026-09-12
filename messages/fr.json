@@ -1,0 +1,258 @@
+{
+  "meta": {
+    "titre": "Diagnostic ALODO MPME",
+    "description": "Évaluez en cinq minutes la capacité de votre entreprise à accéder à un premier crédit formel.",
+    "programme": "ALODO MPME"
+  },
+  "commun": {
+    "langue": "Langue",
+    "changerLangue": "Changer de langue",
+    "pied": "Prototype de diagnostic, données non conservées hors de cet appareil"
+  },
+  "accueil": {
+    "surtitre": "Diagnostic de préparation au crédit",
+    "titre": "Votre entreprise est-elle prête à obtenir son premier crédit formel ?",
+    "chapeau": "Dix questions simples sur votre activité. Aucun jargon, aucun document à préparer. À la fin, vous savez ce qui bloque et par quoi commencer.",
+    "reperes": {
+      "questions": "{nombre} questions",
+      "duree": "5 minutes",
+      "documents": "Aucun document à fournir"
+    },
+    "commencer": "Commencer le diagnostic",
+    "reprendre": "Reprendre le diagnostic",
+    "voirResultat": "Voir mon résultat",
+    "recommencer": "Recommencer à zéro",
+    "positionReprise": "Vous en étiez à la question {rang} sur {total}.",
+    "examen": "Ce que nous examinons",
+    "note": "Ces trois dimensions décident ensemble de votre accès au crédit : le droit d'emprunter, la capacité à le prouver, et les moyens de rembourser. Les autres volets du programme ALODO MPME sont évalués à d'autres étapes."
+  },
+  "diagnostic": {
+    "progression": "Avancement du diagnostic",
+    "position": "{rang} / {total}",
+    "retour": "Retour",
+    "continuer": "Continuer",
+    "terminer": "Voir mon résultat",
+    "sortir": "Reprendre plus tard",
+    "sortirDetail": "Quitter le diagnostic, mes réponses sont conservées",
+    "dimensions": "Dimensions du diagnostic",
+    "chargement": "Chargement de votre diagnostic"
+  },
+  "resultat": {
+    "surtitre": "Résultat du diagnostic",
+    "surCent": "/100",
+    "parDimension": "Par dimension",
+    "pointFort": "Votre point fort",
+    "pointFortNote": "C'est le volet sur lequel votre entreprise est la mieux placée aujourd'hui.",
+    "frein": "Votre frein principal",
+    "action": "À faire cette semaine",
+    "decote": "Votre note financière est ajustée parce que vos chiffres ne s'appuient pas sur des écrits. Le même résultat, tiré de registres, compterait pour sa valeur pleine.",
+    "plafond": "Votre note est limitée à {plafond} sur 100 tant que votre entreprise n'est pas enregistrée. Aucun établissement ne peut accorder un crédit formel sans entité légale, quels que soient vos résultats par ailleurs.",
+    "refaire": "Refaire le diagnostic",
+    "accueil": "Retour à l'accueil"
+  },
+  "dimensions": {
+    "formalisation": { "nom": "Formalisation", "enjeu": "A-t-elle le droit d'emprunter ?" },
+    "comptabilite": { "nom": "Comptabilité", "enjeu": "Peut-elle le prouver ?" },
+    "finance": { "nom": "Finance", "enjeu": "En a-t-elle la capacité ?" }
+  },
+  "maturite": {
+    "critique": "Critique",
+    "fragile": "Fragile",
+    "engage": "Engagée",
+    "solide": "Solide"
+  },
+  "confiance": {
+    "faible": "Confiance faible",
+    "moyenne": "Confiance moyenne",
+    "elevee": "Confiance élevée"
+  },
+  "questions": {
+    "q1-enregistrement": {
+      "intitule": "Votre entreprise est-elle enregistrée officiellement ?",
+      "options": {
+        "rccm-et-ifu": "J'ai un RCCM et un IFU",
+        "un-seul": "J'ai seulement l'un des deux",
+        "en-cours": "Non, mais j'ai commencé les démarches",
+        "aucun": "Non, pas du tout"
+      }
+    },
+    "q2-separation": {
+      "intitule": "L'argent de l'entreprise et votre argent personnel, comment les gérez-vous ?",
+      "options": {
+        "separes": "Complètement séparés",
+        "poreux": "Séparés en général, mais je pioche parfois",
+        "melanges": "Tout est mélangé"
+      }
+    },
+    "q3-encaissement": {
+      "intitule": "Comment vos clients vous paient-ils ?",
+      "aide": "Plusieurs réponses possibles.",
+      "options": {
+        "banque-entreprise": "Sur un compte bancaire au nom de l'entreprise",
+        "momo-entreprise": "Mobile Money, sur un numéro dédié à l'entreprise",
+        "banque-perso": "Sur un compte bancaire à mon nom",
+        "momo-perso": "Mobile Money, sur mon numéro personnel",
+        "especes": "En espèces"
+      }
+    },
+    "q4-enregistrement-flux": {
+      "intitule": "Comment notez-vous vos ventes et vos dépenses ?",
+      "options": {
+        "logiciel": "Avec un logiciel de gestion",
+        "telephone": "Sur mon téléphone (notes, WhatsApp, tableur)",
+        "cahier": "Dans un cahier",
+        "rien": "Je ne note pas"
+      }
+    },
+    "q5-pieces": {
+      "intitule": "Gardez-vous les factures et reçus de vos achats ?",
+      "options": {
+        "toujours": "Toujours",
+        "parfois": "Parfois, quand le fournisseur en donne",
+        "jamais": "Rarement ou jamais"
+      }
+    },
+    "q6-benefice": {
+      "intitule": "Le mois dernier, combien votre entreprise a-t-elle gagné une fois toutes les dépenses payées ?",
+      "options": {
+        "moins-50k": "Moins de 50 000 F",
+        "50k-150k": "50 000 à 150 000 F",
+        "150k-500k": "150 000 à 500 000 F",
+        "plus-500k": "Plus de 500 000 F",
+        "ne-sait-pas": "Je ne sais pas"
+      }
+    },
+    "q6-origine": {
+      "intitule": "Ce chiffre, vous le tirez d'où ?",
+      "options": {
+        "registres": "De mes registres écrits",
+        "estimation": "Je l'estime de tête",
+        "incertain": "Je ne sais pas vraiment"
+      }
+    },
+    "q7-dettes": {
+      "intitule": "Avez-vous de l'argent à rembourser en ce moment ?",
+      "aide": "Plusieurs réponses possibles.",
+      "options": {
+        "aucune": "Non, rien",
+        "banque": "À une banque ou une microfinance",
+        "tontine": "Dans une tontine",
+        "fournisseur": "À un fournisseur",
+        "famille": "À la famille ou à des proches"
+      }
+    },
+    "q8-creances": {
+      "intitule": "Vos clients vous achètent-ils à crédit ?",
+      "options": {
+        "jamais": "Jamais, tout le monde paie comptant",
+        "ponctuel": "Parfois, et ils paient dans les temps",
+        "difficile": "Souvent, et j'ai du mal à me faire payer",
+        "inconnu": "Je ne sais pas combien on me doit au total"
+      }
+    },
+    "q9-coussin": {
+      "intitule": "Si vos ventes s'arrêtaient demain, combien de temps pourriez-vous encore payer le loyer, les fournisseurs et les salaires ?",
+      "options": {
+        "plus-3-mois": "Plus de 3 mois",
+        "1-3-mois": "1 à 3 mois",
+        "1-4-semaines": "1 à 4 semaines",
+        "moins-semaine": "Moins d'une semaine",
+        "ne-sait-pas": "Je ne sais pas"
+      }
+    },
+    "q10-usage": {
+      "intitule": "Si vous obteniez un financement demain, à quoi servirait-il en priorité ?",
+      "options": {
+        "stock": "Acheter plus de stock",
+        "materiel": "Acheter du matériel ou une machine",
+        "embauche": "Embaucher",
+        "dettes": "Rembourser des dettes existantes",
+        "indecis": "Je ne sais pas encore"
+      }
+    }
+  },
+  "recommandations": {
+    "q1-enregistrement": {
+      "defaut": {
+        "titre": "Complétez votre enregistrement",
+        "action": "Rendez-vous au Centre de formalités des entreprises pour obtenir le document qui vous manque, RCCM ou IFU.",
+        "justification": "Aucun établissement ne peut accorder un crédit formel à une entreprise qui n'existe pas juridiquement. Tant que ce dossier est incomplet, il plafonne tout le reste."
+      },
+      "aucun": {
+        "titre": "Faites exister votre entreprise",
+        "action": "Déposez un dossier d'immatriculation au Centre de formalités des entreprises pour obtenir votre RCCM, puis votre IFU auprès de l'administration fiscale.",
+        "justification": "C'est le seul point de départ possible. Vos chiffres peuvent être excellents, ils resteront inexploitables par un prêteur sans entité légale en face."
+      }
+    },
+    "q2-separation": {
+      "defaut": {
+        "titre": "Séparez l'argent de l'entreprise du vôtre",
+        "action": "Ouvrez un compte Mobile Money dédié à l'entreprise et faites-y passer toutes les recettes. Versez-vous une somme fixe chaque mois plutôt que de puiser au fil de l'eau.",
+        "justification": "Tant que les deux caisses n'en font qu'une, personne ne peut mesurer ce que l'entreprise gagne réellement, et vous non plus."
+      }
+    },
+    "q3-encaissement": {
+      "defaut": {
+        "titre": "Laissez une trace de vos encaissements",
+        "action": "Ouvrez un numéro Mobile Money au nom de l'entreprise et proposez-le systématiquement comme moyen de paiement.",
+        "justification": "Un historique de transactions se récupère en quelques minutes et vaut davantage qu'une déclaration. C'est le chemin le plus court vers un dossier vérifiable."
+      }
+    },
+    "q4-enregistrement-flux": {
+      "defaut": {
+        "titre": "Notez vos entrées et vos sorties",
+        "action": "Chaque soir, inscrivez le total encaissé et le total dépensé. Un cahier suffit pour commencer.",
+        "justification": "Sans trace écrite, aucun chiffre n'est reconstituable. Trente jours de relevés valent plus qu'une année de mémoire."
+      }
+    },
+    "q5-pieces": {
+      "defaut": {
+        "titre": "Conservez vos justificatifs",
+        "action": "Demandez un reçu à chaque achat auprès d'un fournisseur et rangez-les dans une pochette unique, mois par mois.",
+        "justification": "Ce sont vos pièces qui transforment un chiffre déclaré en chiffre défendable devant un prêteur."
+      }
+    },
+    "q6-origine": {
+      "defaut": {
+        "titre": "Appuyez vos chiffres sur des écrits",
+        "action": "Reprenez le mois écoulé et reconstituez-le à partir de vos relevés Mobile Money et de vos reçus, plutôt que de mémoire.",
+        "justification": "Un chiffre estimé de tête est décoté dans votre évaluation. Le même chiffre, sorti d'un registre, compte pour sa valeur pleine."
+      }
+    },
+    "q7-dettes": {
+      "defaut": {
+        "titre": "Réduisez le nombre de vos créanciers",
+        "action": "Listez tout ce que vous devez, à qui et à quelle échéance, puis soldez en priorité l'engagement le plus court.",
+        "justification": "Le risque tient au cumul des sources de remboursement. Emprunter davantage avant d'avoir réduit ce cumul aggraverait votre situation au lieu de l'aider."
+      }
+    },
+    "q8-creances": {
+      "defaut": {
+        "titre": "Reprenez la main sur ce qu'on vous doit",
+        "action": "Tenez une page unique avec le nom de chaque client à crédit, le montant et la date promise. Relancez au-delà de quinze jours.",
+        "justification": "De l'argent dû est de l'argent absent de votre caisse. Ne pas savoir combien on vous doit est plus grave que d'avoir des impayés."
+      }
+    },
+    "q9-coussin": {
+      "defaut": {
+        "titre": "Constituez une réserve de sécurité",
+        "action": "Mettez de côté dix pour cent de chaque vente, sur un compte distinct, jusqu'à couvrir un mois de dépenses.",
+        "justification": "C'est votre capacité à absorber un mois creux qui détermine votre capacité à honorer une échéance de remboursement."
+      }
+    },
+    "q10-usage": {
+      "defaut": {
+        "titre": "Précisez ce que financerait un crédit",
+        "action": "Chiffrez un besoin unique, son montant et le revenu supplémentaire attendu, sur une seule page.",
+        "justification": "Un financement sans usage défini se dilue dans la trésorerie courante et se rembourse mal. Le projet précède la demande."
+      }
+    },
+    "defaut": {
+      "defaut": {
+        "titre": "Structurez vos chiffres",
+        "action": "Reprenez le mois écoulé et consignez par écrit vos recettes et vos dépenses.",
+        "justification": "Un diagnostic ne vaut que par la matière qu'on lui donne. La trace écrite est le préalable à toute démarche de financement."
+      }
+    }
+  }
+}

@@ -59,16 +59,3 @@ export const SEUILS_CONFIANCE: readonly {
   { maximumIgnorances: 2, niveau: "moyenne" },
   { maximumIgnorances: Number.POSITIVE_INFINITY, niveau: "faible" },
 ];
-
-export const LIBELLES_MATURITE: Readonly<Record<NiveauMaturite, string>> = {
-  critique: "Critique",
-  fragile: "Fragile",
-  engage: "Engagée",
-  solide: "Solide",
-};
-
-export const LIBELLES_CONFIANCE: Readonly<Record<NiveauConfiance, string>> = {
-  faible: "Confiance faible",
-  moyenne: "Confiance moyenne",
-  elevee: "Confiance élevée",
-};

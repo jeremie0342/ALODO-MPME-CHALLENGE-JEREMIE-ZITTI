@@ -1,5 +1,7 @@
 "use client";
 
+import { useTranslations } from "next-intl";
+
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import type { Option, Question } from "@/domaine/types";
@@ -13,17 +15,22 @@ interface ChampQuestionProps {
 }
 
 /**
- * Rend une question à partir de sa seule description. Ajouter un type de question
- * se fait ici et nulle part ailleurs : les écrans n'en savent rien.
+ * Rend une question à partir de sa seule description structurelle, les libellés étant
+ * résolus par identifiant dans les messages. Ajouter un type de question se fait ici
+ * et nulle part ailleurs : les écrans n'en savent rien.
  */
 export function ChampQuestion({ question, selection, onChoisir, onBasculer }: ChampQuestionProps) {
+  const t = useTranslations("questions");
+  const libelle = (option: Option) => t(`${question.id}.options.${option.id}`);
+
   if (question.type === "choix-multiple") {
     return (
-      <div role="group" aria-label={question.intitule} className="grid gap-2.5">
+      <div role="group" aria-label={t(`${question.id}.intitule`)} className="grid gap-2.5">
         {question.options.map((option) => (
           <LigneOption
             key={option.id}
-            option={option}
+            libelle={libelle(option)}
+            optionId={option.id}
             coche={selection.includes(option.id)}
             multiple
             onActiver={() => onBasculer(option.id, Boolean(option.exclusive))}
@@ -42,7 +49,8 @@ export function ChampQuestion({ question, selection, onChoisir, onBasculer }: Ch
       {question.options.map((option) => (
         <LigneOption
           key={option.id}
-          option={option}
+          libelle={libelle(option)}
+          optionId={option.id}
           coche={selection.includes(option.id)}
           multiple={false}
         />
@@ -52,7 +60,8 @@ export function ChampQuestion({ question, selection, onChoisir, onBasculer }: Ch
 }
 
 interface LigneOptionProps {
-  readonly option: Option;
+  readonly libelle: string;
+  readonly optionId: string;
   readonly coche: boolean;
   readonly multiple: boolean;
   readonly onActiver?: () => void;
@@ -62,8 +71,8 @@ interface LigneOptionProps {
  * Cible tactile pleine largeur. Le marché visé répond sur un téléphone d'entrée de gamme,
  * souvent debout : la zone cliquable est la ligne entière, pas la pastille.
  */
-function LigneOption({ option, coche, multiple, onActiver }: LigneOptionProps) {
-  const identifiant = `option-${option.id}`;
+function LigneOption({ libelle, optionId, coche, multiple, onActiver }: LigneOptionProps) {
+  const identifiant = `option-${optionId}`;
 
   return (
     <label
@@ -83,11 +92,11 @@ function LigneOption({ option, coche, multiple, onActiver }: LigneOptionProps) {
           className="shrink-0"
         />
       ) : (
-        <RadioGroupItem id={identifiant} value={option.id} className="shrink-0" />
+        <RadioGroupItem id={identifiant} value={optionId} className="shrink-0" />
       )}
 
       <span className={cn("text-[0.9375rem] leading-snug text-encre", coche && "font-medium")}>
-        {option.libelle}
+        {libelle}
       </span>
     </label>
   );

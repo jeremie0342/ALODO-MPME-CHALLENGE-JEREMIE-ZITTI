@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Check } from "lucide-react";
 
 import { DIMENSIONS, QUESTIONS } from "@/domaine/questionnaire";
@@ -18,6 +19,7 @@ interface ProgressionProps {
  * par dimension dans le rail, qui montre aussi ce qui reste à venir.
  */
 export function BarreProgression({ indexCourant }: { readonly indexCourant: number }) {
+  const t = useTranslations("diagnostic");
   const total = QUESTIONS.length;
   const rang = indexCourant + 1;
   // Calé sur le rang et non sur les questions achevées : une barre vide sur la première
@@ -27,7 +29,7 @@ export function BarreProgression({ indexCourant }: { readonly indexCourant: numb
   return (
     <div className="flex items-center gap-4">
       <span className="libelle-instrument shrink-0 text-encre-attenue" data-mesure>
-        {String(rang).padStart(2, "0")} / {total}
+        {t("position", { rang: String(rang).padStart(2, "0"), total })}
       </span>
 
       <div
@@ -35,7 +37,7 @@ export function BarreProgression({ indexCourant }: { readonly indexCourant: numb
         aria-valuenow={rang}
         aria-valuemin={1}
         aria-valuemax={total}
-        aria-label="Avancement du diagnostic"
+        aria-label={t("progression")}
         className="h-1 flex-1 overflow-hidden rounded-full bg-papier-creux"
       >
         <div
@@ -48,10 +50,12 @@ export function BarreProgression({ indexCourant }: { readonly indexCourant: numb
 }
 
 export function RailDimensions({ indexCourant, reponses }: ProgressionProps) {
+  const t = useTranslations("diagnostic");
+  const tDimensions = useTranslations("dimensions");
   const dimensionCourante = QUESTIONS[indexCourant]?.dimension;
 
   return (
-    <nav aria-label="Dimensions du diagnostic" className="grid gap-px">
+    <nav aria-label={t("dimensions")} className="grid gap-px">
       {DIMENSIONS.map((dimension) => {
         const questions = QUESTIONS.filter((question) => question.dimension === dimension.id);
         const repondues = questions.filter((question) => estRepondue(question, reponses)).length;
@@ -75,7 +79,7 @@ export function RailDimensions({ indexCourant, reponses }: ProgressionProps) {
                   courante ? "text-encre" : "text-encre-discrete",
                 )}
               >
-                {dimension.nom}
+                {tDimensions(`${dimension.id}.nom`)}
               </span>
 
               {achevee ? (
@@ -87,7 +91,9 @@ export function RailDimensions({ indexCourant, reponses }: ProgressionProps) {
               )}
             </div>
 
-            <p className="mt-1 text-xs leading-snug text-encre-discrete">{dimension.enjeu}</p>
+            <p className="mt-1 text-xs leading-snug text-encre-discrete">
+              {tDimensions(`${dimension.id}.enjeu`)}
+            </p>
           </div>
         );
       })}
@@ -96,7 +102,7 @@ export function RailDimensions({ indexCourant, reponses }: ProgressionProps) {
 }
 
 export function EtiquetteDimension({ dimension }: { readonly dimension: IdentifiantDimension }) {
-  const trouvee = DIMENSIONS.find((entree) => entree.id === dimension);
+  const t = useTranslations("dimensions");
 
-  return <span className="libelle-instrument text-signal">{trouvee?.nom}</span>;
+  return <span className="libelle-instrument text-signal">{t(`${dimension}.nom`)}</span>;
 }

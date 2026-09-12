@@ -13,9 +13,13 @@ export type StrategieAgregation = "meilleur-canal" | "cumul-dettes";
 /** Nature d'une dette, utilisée par la stratégie cumul-dettes. */
 export type NatureDette = "aucune" | "formelle" | "informelle";
 
+/**
+ * Aucun libellé ne figure dans le domaine : seuls des identifiants et des points.
+ * Les formulations vivent dans messages/, ce qui rend le questionnaire traduisible
+ * sans qu'une seule ligne du moteur de score ne change.
+ */
 export interface Option {
   readonly id: string;
-  readonly libelle: string;
   readonly points: number;
   /** Marque une réponse d'ignorance : elle est notée, et elle abaisse l'indice de confiance. */
   readonly ignorance?: boolean;
@@ -28,11 +32,10 @@ export interface Question {
   readonly id: string;
   readonly dimension: IdentifiantDimension;
   readonly type: TypeQuestion;
-  readonly intitule: string;
-  /** Précision affichée sous l'intitulé, pour lever une ambiguïté sans allonger la question. */
-  readonly aide?: string;
   readonly options: readonly Option[];
   readonly pointsMax: number;
+  /** Signale qu'une précision accompagne l'intitulé, à récupérer dans les messages. */
+  readonly avecAide?: boolean;
   /**
    * Une question non notée est enregistrée sans entrer dans le score.
    * Q6a est dans ce cas : on relève le montant comme ligne de base, sans lui faire confiance.
@@ -45,9 +48,6 @@ export interface Question {
 
 export interface Dimension {
   readonly id: IdentifiantDimension;
-  readonly nom: string;
-  /** Ce que la dimension établit, formulé côté accès au crédit. */
-  readonly enjeu: string;
   /** Poids dans le score global. La somme des poids vaut 1. */
   readonly poids: number;
 }
@@ -68,11 +68,16 @@ export interface ScoreDimension {
 
 export interface Frein {
   readonly questionId: string;
-  readonly intitule: string;
   readonly dimension: IdentifiantDimension;
   /** Points manqués sur la question, pondérés par le poids de sa dimension. */
   readonly ecartPondere: number;
 }
+
+/**
+ * Clé de la recommandation à afficher, de la forme `<questionId>.<variante>`.
+ * Le texte correspondant vit dans les messages de chaque langue.
+ */
+export type CleRecommandation = string;
 
 export interface Resultat {
   readonly score: number;
@@ -86,12 +91,5 @@ export interface Resultat {
   readonly plafondAtteint: boolean;
   readonly pointFort: IdentifiantDimension;
   readonly frein: Frein;
-  readonly recommandation: Recommandation;
-}
-
-export interface Recommandation {
-  readonly titre: string;
-  readonly action: string;
-  /** Pourquoi cette action précède les autres. */
-  readonly justification: string;
+  readonly recommandation: CleRecommandation;
 }

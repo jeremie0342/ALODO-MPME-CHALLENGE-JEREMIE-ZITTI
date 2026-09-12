@@ -1,0 +1,258 @@
+{
+  "meta": {
+    "titre": "ALODO MPME Diagnostic",
+    "description": "Find out in five minutes whether your business is ready for its first formal loan.",
+    "programme": "ALODO MPME"
+  },
+  "commun": {
+    "langue": "Language",
+    "changerLangue": "Change language",
+    "pied": "Diagnostic prototype, no data leaves this device"
+  },
+  "accueil": {
+    "surtitre": "Credit readiness diagnostic",
+    "titre": "Is your business ready for its first formal loan?",
+    "chapeau": "Ten plain questions about your business. No jargon, no paperwork to gather. By the end you will know what is holding you back and where to start.",
+    "reperes": {
+      "questions": "{nombre} questions",
+      "duree": "5 minutes",
+      "documents": "No documents needed"
+    },
+    "commencer": "Start the diagnostic",
+    "reprendre": "Resume the diagnostic",
+    "voirResultat": "See my result",
+    "recommencer": "Start over",
+    "positionReprise": "You stopped at question {rang} of {total}.",
+    "examen": "What we look at",
+    "note": "These three areas decide your access to credit together: the right to borrow, the ability to prove it, and the means to repay. The other parts of the ALODO MPME programme are assessed at later stages."
+  },
+  "diagnostic": {
+    "progression": "Diagnostic progress",
+    "position": "{rang} / {total}",
+    "retour": "Back",
+    "continuer": "Continue",
+    "terminer": "See my result",
+    "sortir": "Finish later",
+    "sortirDetail": "Leave the diagnostic, my answers are saved",
+    "dimensions": "Diagnostic areas",
+    "chargement": "Loading your diagnostic"
+  },
+  "resultat": {
+    "surtitre": "Diagnostic result",
+    "surCent": "/100",
+    "parDimension": "By area",
+    "pointFort": "Your strongest area",
+    "pointFortNote": "This is where your business stands best today.",
+    "frein": "What holds you back most",
+    "action": "Do this week",
+    "decote": "Your finance score is adjusted because your figures are not backed by written records. The same figures, drawn from a ledger, would count in full.",
+    "plafond": "Your score is capped at {plafond} out of 100 until your business is registered. No lender can grant formal credit without a legal entity, however strong the rest of your figures.",
+    "refaire": "Take the diagnostic again",
+    "accueil": "Back to home"
+  },
+  "dimensions": {
+    "formalisation": { "nom": "Registration", "enjeu": "Is it allowed to borrow?" },
+    "comptabilite": { "nom": "Bookkeeping", "enjeu": "Can it prove its figures?" },
+    "finance": { "nom": "Finances", "enjeu": "Can it afford to repay?" }
+  },
+  "maturite": {
+    "critique": "Critical",
+    "fragile": "Fragile",
+    "engage": "Progressing",
+    "solide": "Solid"
+  },
+  "confiance": {
+    "faible": "Low confidence",
+    "moyenne": "Moderate confidence",
+    "elevee": "High confidence"
+  },
+  "questions": {
+    "q1-enregistrement": {
+      "intitule": "Is your business officially registered?",
+      "options": {
+        "rccm-et-ifu": "I have both a trade register number (RCCM) and a tax ID (IFU)",
+        "un-seul": "I have only one of the two",
+        "en-cours": "Not yet, but I have started the process",
+        "aucun": "No, not at all"
+      }
+    },
+    "q2-separation": {
+      "intitule": "How do you handle business money and your own money?",
+      "options": {
+        "separes": "Kept completely separate",
+        "poreux": "Mostly separate, but I dip into it sometimes",
+        "melanges": "They are all mixed together"
+      }
+    },
+    "q3-encaissement": {
+      "intitule": "How do your customers pay you?",
+      "aide": "Select all that apply.",
+      "options": {
+        "banque-entreprise": "Into a bank account in the business name",
+        "momo-entreprise": "Mobile Money, on a number used only for the business",
+        "banque-perso": "Into a bank account in my own name",
+        "momo-perso": "Mobile Money, on my personal number",
+        "especes": "In cash"
+      }
+    },
+    "q4-enregistrement-flux": {
+      "intitule": "How do you record your sales and expenses?",
+      "options": {
+        "logiciel": "With accounting software",
+        "telephone": "On my phone (notes, WhatsApp, spreadsheet)",
+        "cahier": "In a notebook",
+        "rien": "I do not record them"
+      }
+    },
+    "q5-pieces": {
+      "intitule": "Do you keep invoices and receipts for what you buy?",
+      "options": {
+        "toujours": "Always",
+        "parfois": "Sometimes, when the supplier gives one",
+        "jamais": "Rarely or never"
+      }
+    },
+    "q6-benefice": {
+      "intitule": "Last month, how much did your business make once every expense was paid?",
+      "options": {
+        "moins-50k": "Under 50,000 CFA",
+        "50k-150k": "50,000 to 150,000 CFA",
+        "150k-500k": "150,000 to 500,000 CFA",
+        "plus-500k": "Over 500,000 CFA",
+        "ne-sait-pas": "I do not know"
+      }
+    },
+    "q6-origine": {
+      "intitule": "Where does that figure come from?",
+      "options": {
+        "registres": "From my written records",
+        "estimation": "I worked it out from memory",
+        "incertain": "I am not really sure"
+      }
+    },
+    "q7-dettes": {
+      "intitule": "Do you owe money to anyone at the moment?",
+      "aide": "Select all that apply.",
+      "options": {
+        "aucune": "No, nothing",
+        "banque": "To a bank or a microfinance institution",
+        "tontine": "To a savings group (tontine or susu)",
+        "fournisseur": "To a supplier",
+        "famille": "To family or friends"
+      }
+    },
+    "q8-creances": {
+      "intitule": "Do your customers buy on credit?",
+      "options": {
+        "jamais": "Never, everyone pays on the spot",
+        "ponctuel": "Sometimes, and they pay on time",
+        "difficile": "Often, and I struggle to get paid",
+        "inconnu": "I do not know how much I am owed in total"
+      }
+    },
+    "q9-coussin": {
+      "intitule": "If your sales stopped tomorrow, how long could you keep paying rent, suppliers and wages?",
+      "options": {
+        "plus-3-mois": "More than 3 months",
+        "1-3-mois": "1 to 3 months",
+        "1-4-semaines": "1 to 4 weeks",
+        "moins-semaine": "Less than a week",
+        "ne-sait-pas": "I do not know"
+      }
+    },
+    "q10-usage": {
+      "intitule": "If you received funding tomorrow, what would it go to first?",
+      "options": {
+        "stock": "Buying more stock",
+        "materiel": "Buying equipment or a machine",
+        "embauche": "Hiring someone",
+        "dettes": "Paying off existing debts",
+        "indecis": "I do not know yet"
+      }
+    }
+  },
+  "recommandations": {
+    "q1-enregistrement": {
+      "defaut": {
+        "titre": "Complete your registration",
+        "action": "Go to the one-stop business registration centre (CFE) to obtain the document you are missing, either the RCCM or the IFU.",
+        "justification": "No lender can grant formal credit to a business that does not exist in law. While this file is incomplete, it caps everything else."
+      },
+      "aucun": {
+        "titre": "Give your business a legal existence",
+        "action": "File for registration at the one-stop business registration centre (CFE) to obtain your RCCM, then your tax ID (IFU) from the tax office.",
+        "justification": "This is the only possible starting point. Your figures may be excellent, but no lender can act on them without a legal entity on the other side."
+      }
+    },
+    "q2-separation": {
+      "defaut": {
+        "titre": "Separate business money from your own",
+        "action": "Open a Mobile Money account used only for the business and run every sale through it. Pay yourself a fixed amount each month instead of dipping in as you go.",
+        "justification": "While both purses are one, nobody can measure what the business actually earns, and neither can you."
+      }
+    },
+    "q3-encaissement": {
+      "defaut": {
+        "titre": "Leave a trace of what you take in",
+        "action": "Open a Mobile Money number in the business name and offer it as a payment option every time.",
+        "justification": "A transaction history takes minutes to pull and carries more weight than a statement. It is the shortest path to a file a lender can verify."
+      }
+    },
+    "q4-enregistrement-flux": {
+      "defaut": {
+        "titre": "Write down what comes in and what goes out",
+        "action": "Every evening, write down the total taken in and the total spent. A notebook is enough to start.",
+        "justification": "Without a written trace, no figure can be rebuilt. Thirty days of records are worth more than a year of memory."
+      }
+    },
+    "q5-pieces": {
+      "defaut": {
+        "titre": "Keep your receipts",
+        "action": "Ask for a receipt on every supplier purchase and keep them all in one folder, month by month.",
+        "justification": "Your receipts are what turn a figure you state into a figure you can defend in front of a lender."
+      }
+    },
+    "q6-origine": {
+      "defaut": {
+        "titre": "Back your figures with written records",
+        "action": "Go back over last month and rebuild it from your Mobile Money statements and your receipts, rather than from memory.",
+        "justification": "A figure worked out from memory is discounted in your assessment. The same figure, drawn from a ledger, counts in full."
+      }
+    },
+    "q7-dettes": {
+      "defaut": {
+        "titre": "Reduce how many people you owe",
+        "action": "List everything you owe, to whom and when it falls due, then clear the shortest commitment first.",
+        "justification": "The risk lies in how many repayment sources pile up. Borrowing more before reducing that pile would make your position worse, not better."
+      }
+    },
+    "q8-creances": {
+      "defaut": {
+        "titre": "Take control of what you are owed",
+        "action": "Keep a single page listing each customer who buys on credit, the amount and the date promised. Follow up after fifteen days.",
+        "justification": "Money owed is money missing from your till. Not knowing how much you are owed is worse than having late payers."
+      }
+    },
+    "q9-coussin": {
+      "defaut": {
+        "titre": "Build a safety reserve",
+        "action": "Set aside ten per cent of every sale, in a separate account, until it covers one month of expenses.",
+        "justification": "Your ability to absorb a slow month is what decides your ability to meet a repayment date."
+      }
+    },
+    "q10-usage": {
+      "defaut": {
+        "titre": "Be specific about what a loan would fund",
+        "action": "Put one need on a single page, with its cost and the extra income you expect from it.",
+        "justification": "Funding without a defined purpose dissolves into day-to-day cash and repays badly. The plan comes before the request."
+      }
+    },
+    "defaut": {
+      "defaut": {
+        "titre": "Put your figures in order",
+        "action": "Go back over last month and write down what came in and what went out.",
+        "justification": "A diagnostic is only worth the material it is given. A written trace comes before any funding application."
+      }
+    }
+  }
+}

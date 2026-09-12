@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
@@ -11,11 +11,15 @@ import {
   EtiquetteDimension,
   RailDimensions,
 } from "@/components/diagnostic/progression";
+import { SqueletteQuestion } from "@/components/diagnostic/squelette";
 import { Contenu, EnTete } from "@/components/mise-en-page/cadre";
 import { Button } from "@/components/ui/button";
 import { useDiagnostic } from "@/etat/contexte-diagnostic";
+import { useRouter } from "@/i18n/navigation";
 
 export default function PageDiagnostic() {
+  const t = useTranslations("diagnostic");
+  const tQuestions = useTranslations("questions");
   const router = useRouter();
   const {
     question,
@@ -43,7 +47,7 @@ export default function PageDiagnostic() {
         <EnTete>
           <BoutonSortie />
         </EnTete>
-        <main className="flex-1" aria-busy="true" />
+        <SqueletteQuestion />
       </>
     );
   }
@@ -68,10 +72,14 @@ export default function PageDiagnostic() {
               <EtiquetteDimension dimension={question.dimension} />
 
               <h1 className="mt-4 font-display text-2xl leading-[1.15] text-balance text-encre sm:text-3xl lg:text-4xl">
-                {question.intitule}
+                {tQuestions(`${question.id}.intitule`)}
               </h1>
 
-              {question.aide && <p className="mt-3 text-sm text-encre-attenue">{question.aide}</p>}
+              {question.avecAide && (
+                <p className="mt-3 text-sm text-encre-attenue">
+                  {tQuestions(`${question.id}.aide`)}
+                </p>
+              )}
 
               <div className="mt-8">
                 <ChampQuestion
@@ -85,7 +93,7 @@ export default function PageDiagnostic() {
               {sousQuestion && principaleRepondue && (
                 <section className="mt-10 border-t border-trait pt-8">
                   <h2 className="font-display text-xl text-encre sm:text-2xl">
-                    {sousQuestion.intitule}
+                    {tQuestions(`${sousQuestion.id}.intitule`)}
                   </h2>
 
                   <div className="mt-6">
@@ -113,11 +121,11 @@ export default function PageDiagnostic() {
                   className="text-encre-attenue"
                 >
                   <ArrowLeft className="size-4" strokeWidth={2} aria-hidden="true" />
-                  Retour
+                  {t("retour")}
                 </Button>
 
                 <Button onClick={suivante} disabled={!repondu} size="lg" className="h-12 px-6">
-                  {derniere ? "Voir mon résultat" : "Continuer"}
+                  {derniere ? t("terminer") : t("continuer")}
                   <ArrowRight className="size-4" strokeWidth={2} aria-hidden="true" />
                 </Button>
               </div>

@@ -1,3 +1,5 @@
+import { useTranslations } from "next-intl";
+import { setRequestLocale } from "next-intl/server";
 import { FileText, ShieldCheck, Timer } from "lucide-react";
 
 import { BoutonDemarrage } from "@/components/accueil/bouton-demarrage";
@@ -6,12 +8,22 @@ import { Contenu, EnTete, PiedDePage } from "@/components/mise-en-page/cadre";
 import { DIMENSIONS, NOMBRE_QUESTIONS } from "@/domaine/questionnaire";
 
 const REPERES = [
-  { icone: FileText, libelle: `${NOMBRE_QUESTIONS} questions` },
-  { icone: Timer, libelle: "5 minutes" },
-  { icone: ShieldCheck, libelle: "Aucun document à fournir" },
-];
+  { cle: "questions", icone: FileText },
+  { cle: "duree", icone: Timer },
+  { cle: "documents", icone: ShieldCheck },
+] as const;
 
-export default function PageAccueil() {
+export default async function PageAccueil({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+
+  return <Accueil />;
+}
+
+function Accueil() {
+  const t = useTranslations("accueil");
+  const tDimensions = useTranslations("dimensions");
+
   return (
     <>
       <EnTete />
@@ -21,22 +33,23 @@ export default function PageAccueil() {
           <Entrelacs className="pointer-events-none absolute -top-16 -right-32 hidden h-[30rem] w-[30rem] lg:block" />
 
           <Contenu className="relative py-16 sm:py-24">
-            <p className="libelle-instrument text-signal">Diagnostic de préparation au crédit</p>
+            <p className="libelle-instrument text-signal">{t("surtitre")}</p>
 
             <h1 className="mt-6 max-w-3xl font-display text-4xl leading-[1.05] tracking-tight text-balance text-encre sm:text-5xl lg:text-6xl">
-              Votre entreprise est-elle prête à obtenir son premier crédit formel&nbsp;?
+              {t("titre")}
             </h1>
 
             <p className="mt-6 max-w-xl text-lg leading-relaxed text-encre-attenue">
-              Dix questions simples sur votre activité. Aucun jargon, aucun document à préparer. À
-              la fin, vous savez ce qui bloque et par quoi commencer.
+              {t("chapeau")}
             </p>
 
             <ul className="mt-10 flex flex-wrap gap-x-8 gap-y-3">
-              {REPERES.map(({ icone: Icone, libelle }) => (
-                <li key={libelle} className="flex items-center gap-2 text-encre-attenue">
+              {REPERES.map(({ cle, icone: Icone }) => (
+                <li key={cle} className="flex items-center gap-2 text-encre-attenue">
                   <Icone className="size-4 text-signal" strokeWidth={1.75} aria-hidden="true" />
-                  <span className="libelle-instrument">{libelle}</span>
+                  <span className="libelle-instrument">
+                    {t(`reperes.${cle}`, { nombre: NOMBRE_QUESTIONS })}
+                  </span>
                 </li>
               ))}
             </ul>
@@ -49,7 +62,7 @@ export default function PageAccueil() {
 
         <section className="border-t border-trait">
           <Contenu className="py-14 sm:py-20">
-            <h2 className="libelle-instrument text-encre-discrete">Ce que nous examinons</h2>
+            <h2 className="libelle-instrument text-encre-discrete">{t("examen")}</h2>
 
             <ol className="mt-8 grid gap-px sm:grid-cols-3">
               {DIMENSIONS.map((dimension, index) => (
@@ -57,18 +70,18 @@ export default function PageAccueil() {
                   <span className="font-mono text-xs text-encre-discrete" data-mesure>
                     {String(index + 1).padStart(2, "0")}
                   </span>
-                  <h3 className="mt-3 font-display text-2xl text-encre">{dimension.nom}</h3>
+                  <h3 className="mt-3 font-display text-2xl text-encre">
+                    {tDimensions(`${dimension.id}.nom`)}
+                  </h3>
                   <p className="mt-2 text-sm leading-relaxed text-encre-attenue">
-                    {dimension.enjeu}
+                    {tDimensions(`${dimension.id}.enjeu`)}
                   </p>
                 </li>
               ))}
             </ol>
 
             <p className="mt-10 max-w-2xl text-sm leading-relaxed text-encre-attenue">
-              Ces trois dimensions décident ensemble de votre accès au crédit&nbsp;: le droit
-              d&apos;emprunter, la capacité à le prouver, et les moyens de rembourser. Les autres
-              volets du programme ALODO MPME sont évalués à d&apos;autres étapes.
+              {t("note")}
             </p>
           </Contenu>
         </section>
