@@ -8,6 +8,9 @@ const eslintConfig = defineConfig([
   ...nextTs,
   prettier,
   {
+    // La regle ne vise que le code applicatif : dans un script en ligne de commande,
+    // ecrire sur la sortie standard est le comportement attendu.
+    files: ["src/**", "tests/**"],
     rules: {
       "no-restricted-properties": [
         "error",
