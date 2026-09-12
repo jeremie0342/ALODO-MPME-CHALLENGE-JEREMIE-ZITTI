@@ -158,6 +158,58 @@ test.describe("résultat", () => {
   });
 });
 
+test.describe("sortie et reprise", () => {
+  test("permet de quitter le questionnaire à tout moment", async ({ page }) => {
+    await page.goto("/diagnostic");
+
+    const sortie = page.getByRole("link", { name: /Reprendre plus tard|Quitter le diagnostic/ });
+    await expect(sortie).toBeVisible();
+
+    await sortie.click();
+    await expect(page).toHaveURL(/\/$/);
+  });
+
+  test("propose de reprendre là où l'utilisateur s'est arrêté", async ({ page }) => {
+    await page.goto("/diagnostic");
+    await page.locator("label").first().click();
+    await continuer(page);
+    await page.getByRole("link", { name: /Reprendre plus tard|Quitter le diagnostic/ }).click();
+
+    await expect(page.getByRole("link", { name: /Reprendre le diagnostic/ })).toBeVisible();
+    await expect(page.getByText(/question 2 sur 10/)).toBeVisible();
+  });
+
+  test("reprend exactement à la question quittée", async ({ page }) => {
+    await page.goto("/diagnostic");
+    await page.locator("label").first().click();
+    await continuer(page);
+    await page.getByRole("link", { name: /Reprendre plus tard|Quitter le diagnostic/ }).click();
+    await page.getByRole("link", { name: /Reprendre le diagnostic/ }).click();
+
+    await expect(page.getByText("02 / 10")).toBeVisible();
+  });
+
+  test("permet de repartir de zéro depuis l'accueil", async ({ page }) => {
+    await page.goto("/diagnostic");
+    await page.locator("label").first().click();
+    await continuer(page);
+    await page.getByRole("link", { name: /Reprendre plus tard|Quitter le diagnostic/ }).click();
+
+    await page.getByRole("button", { name: /Recommencer à zéro/ }).click();
+
+    await expect(page).toHaveURL(/\/diagnostic$/);
+    await expect(page.getByText("01 / 10")).toBeVisible();
+    await expect(page.getByRole("radio", { checked: true })).toHaveCount(0);
+  });
+
+  test("n'affiche aucune reprise avant le premier passage", async ({ page }) => {
+    await page.goto("/");
+
+    await expect(page.getByRole("link", { name: /Commencer le diagnostic/ })).toBeVisible();
+    await expect(page.getByRole("button", { name: /Recommencer à zéro/ })).toHaveCount(0);
+  });
+});
+
 test.describe("lisibilité", () => {
   test("ne provoque aucun débordement horizontal", async ({ page }) => {
     await page.goto("/diagnostic");

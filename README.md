@@ -93,12 +93,13 @@ Les tests de parcours nécessitent le navigateur Playwright : `npx playwright in
 - Parcours complet en trois écrans.
 - Dix questions, quatre types de réponse : choix unique, choix multiple, tranche, sous-question.
 - Progression sur deux lectures : barre globale et rail par dimension.
+- Sortie possible à tout moment, et reprise exacte à la question quittée.
 - Reprise du parcours après fermeture ou coupure réseau.
 - Score sur 100, indice de confiance, détail par dimension avec décote visible.
 - Point fort, frein principal, recommandation locale exécutable.
 - Avertissement explicite quand le plafond légal contraint le score.
 - Responsive, cibles tactiles de 56 px, aucun débordement horizontal.
-- 49 tests unitaires et 28 tests de parcours.
+- 49 tests unitaires et 38 tests de parcours.
 
 ## 6. Limites
 

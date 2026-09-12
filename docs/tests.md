@@ -37,10 +37,11 @@ Les primitives shadcn sont exclues du scan : c'est du code téléchargé, hors d
 
 ## Tests de parcours
 
-`tests/parcours/diagnostic.spec.ts`, rejoués sur deux profils, Desktop Chrome et Pixel 5.
+`tests/parcours/diagnostic.spec.ts`, 19 scénarios rejoués sur deux profils, Desktop Chrome et Pixel 5.
 
 - **Accueil** : objectif, durée, dimensions annoncées, bouton de départ fonctionnel.
 - **Questions** : avancement bloqué tant qu'une question est sans réponse, position toujours affichée, retour arrière sans perte, sous-question exigée avant de continuer, reprise intacte après rechargement.
+- **Sortie et reprise** : sortie accessible à tout moment, accueil proposant la reprise et le rang atteint, reprise exacte à la question quittée, remise à zéro explicite.
 - **Résultat** : score, point fort, frein, recommandation, détail par dimension, indice de confiance, reprise du parcours.
 - **Lisibilité** : aucun débordement horizontal, un seul titre de niveau 1 par écran.
 

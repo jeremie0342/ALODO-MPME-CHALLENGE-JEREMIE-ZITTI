@@ -1,9 +1,8 @@
-import Link from "next/link";
-import { ArrowRight, FileText, ShieldCheck, Timer } from "lucide-react";
+import { FileText, ShieldCheck, Timer } from "lucide-react";
 
+import { BoutonDemarrage } from "@/components/accueil/bouton-demarrage";
 import { Entrelacs } from "@/components/marque/entrelacs";
 import { Contenu, EnTete, PiedDePage } from "@/components/mise-en-page/cadre";
-import { Button } from "@/components/ui/button";
 import { DIMENSIONS, NOMBRE_QUESTIONS } from "@/domaine/questionnaire";
 
 const REPERES = [
@@ -43,12 +42,7 @@ export default function PageAccueil() {
             </ul>
 
             <div className="mt-12">
-              <Button asChild size="lg" className="h-12 px-7 text-base">
-                <Link href="/diagnostic">
-                  Commencer le diagnostic
-                  <ArrowRight className="size-4" strokeWidth={2} aria-hidden="true" />
-                </Link>
-              </Button>
+              <BoutonDemarrage />
             </div>
           </Contenu>
         </section>

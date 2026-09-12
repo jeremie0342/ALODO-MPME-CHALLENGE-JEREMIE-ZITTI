@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
+import { BoutonSortie } from "@/components/diagnostic/bouton-sortie";
 import { ChampQuestion } from "@/components/diagnostic/champ-question";
 import {
   BarreProgression,
@@ -39,7 +40,9 @@ export default function PageDiagnostic() {
   if (!pret) {
     return (
       <>
-        <EnTete />
+        <EnTete>
+          <BoutonSortie />
+        </EnTete>
         <main className="flex-1" aria-busy="true" />
       </>
     );
@@ -50,7 +53,9 @@ export default function PageDiagnostic() {
 
   return (
     <>
-      <EnTete />
+      <EnTete>
+        <BoutonSortie />
+      </EnTete>
 
       <main className="flex-1">
         <Contenu className="py-10 sm:py-14">
