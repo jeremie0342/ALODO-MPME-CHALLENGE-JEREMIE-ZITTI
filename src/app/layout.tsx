@@ -38,8 +38,12 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
+    // Les extensions de navigateur (correcteurs, gestionnaires de mots de passe) ajoutent
+    // leurs attributs sur <html> avant l'hydratation. La tolérance ne porte que sur cette
+    // balise : un écart réel dans l'arbre reste signalé.
     <html
       lang="fr"
+      suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} ${instrumentSerif.variable} h-full`}
     >
       <body className="flex min-h-full flex-col">{children}</body>
