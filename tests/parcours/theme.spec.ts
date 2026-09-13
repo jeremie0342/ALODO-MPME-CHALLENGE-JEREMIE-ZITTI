@@ -109,3 +109,81 @@ test.describe("lisibilite du logo", () => {
     await expect(clair).toBeHidden();
   });
 });
+
+/**
+ * Le theme est pose sur la racine du document, hors de l'arbre React. Une navigation
+ * entre langues re-rend cette racine et faisait disparaitre l'attribut : l'affichage
+ * repassait en clair alors que la preference enregistree disait l'inverse.
+ */
+test.describe("persistance du theme", () => {
+  test.use({ colorScheme: "light" });
+
+  async function passerEnSombre(page: import("@playwright/test").Page) {
+    const bouton = page.getByRole("button", { name: /thème|theme/i });
+
+    while ((await page.locator("html").getAttribute("data-theme")) !== "sombre") {
+      await bouton.click();
+      await page.waitForTimeout(120);
+    }
+  }
+
+  const fond = (page: import("@playwright/test").Page) =>
+    page.evaluate(() => getComputedStyle(document.body).backgroundColor);
+
+  test("survit a un changement de langue", async ({ page }) => {
+    await page.goto("/fr");
+    await passerEnSombre(page);
+    const attendu = await fond(page);
+
+    await page.getByRole("link", { name: "en", exact: true }).click();
+    await expect(page).toHaveURL(/\/en$/);
+
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "sombre");
+    expect(await fond(page)).toBe(attendu);
+  });
+
+  test("survit a un aller-retour entre langues", async ({ page }) => {
+    await page.goto("/fr");
+    await passerEnSombre(page);
+
+    await page.getByRole("link", { name: "en", exact: true }).click();
+    await expect(page).toHaveURL(/\/en$/);
+    await page.getByRole("link", { name: "fr", exact: true }).click();
+    await expect(page).toHaveURL(/\/fr$/);
+
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "sombre");
+  });
+
+  test("reste coherent entre l'affichage et la preference enregistree", async ({ page }) => {
+    await page.goto("/fr");
+    await passerEnSombre(page);
+
+    await page.getByRole("link", { name: "en", exact: true }).click();
+    await expect(page).toHaveURL(/\/en$/);
+
+    const enregistree = await page.evaluate(() => localStorage.getItem("alodo-mpme.theme.v1"));
+    const affichee = await page.locator("html").getAttribute("data-theme");
+
+    expect(affichee).toBe(enregistree);
+  });
+
+  test("survit a un rechargement puis a un changement de langue", async ({ page }) => {
+    await page.goto("/fr");
+    await passerEnSombre(page);
+
+    await page.reload();
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "sombre");
+
+    await page.getByRole("link", { name: "en", exact: true }).click();
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "sombre");
+  });
+
+  test("s'applique aussi a la page introuvable", async ({ page }) => {
+    await page.goto("/fr");
+    await passerEnSombre(page);
+
+    await page.goto("/fr/adresse-inexistante");
+
+    await expect(page.locator("html")).toHaveAttribute("data-theme", "sombre");
+  });
+});

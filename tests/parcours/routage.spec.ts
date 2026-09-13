@@ -81,3 +81,32 @@ test.describe("icone du site", () => {
     expect(reponse.status()).toBe(200);
   });
 });
+
+test.describe("repli hors langue", () => {
+  test("sert notre page et non celle de Next", async ({ page }) => {
+    // Une adresse comportant un point echappe au middleware : aucune langue ne peut
+    // lui etre associee, c'est le repli racine qui repond.
+    await page.goto("/fichier-absent.txt");
+
+    await expect(page.getByRole("banner")).toBeVisible();
+    await expect(page.getByRole("contentinfo")).toBeVisible();
+    await expect(page.getByRole("heading", { level: 1 })).toContainText("introuvable");
+    await expect(page.getByRole("heading", { level: 1 })).toContainText("not found");
+  });
+
+  test("propose une entree dans chaque langue", async ({ page }) => {
+    await page.goto("/fichier-absent.txt");
+
+    await expect(
+      page.getByRole("link", { name: /Aller a l'accueil|Aller à l'accueil/ }),
+    ).toBeVisible();
+    await expect(page.getByRole("link", { name: /Go to home/ })).toBeVisible();
+  });
+
+  test("ramene vers le diagnostic", async ({ page }) => {
+    await page.goto("/fichier-absent.txt");
+    await page.getByRole("link", { name: /Go to home/ }).click();
+
+    await expect(page).toHaveURL(/\/en$/);
+  });
+});

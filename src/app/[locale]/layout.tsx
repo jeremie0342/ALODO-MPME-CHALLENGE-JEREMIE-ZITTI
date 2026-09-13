@@ -11,6 +11,7 @@ import { SCRIPT_ANTI_CLIGNOTEMENT } from "@/etat/theme";
 
 import { FournisseurMouvement } from "@/animation/fournisseur";
 import { DonneesStructurees } from "@/components/seo/donnees-structurees";
+import { SynchroniseurTheme } from "@/components/mise-en-page/synchroniseur-theme";
 
 import "../globals.css";
 
@@ -114,6 +115,7 @@ export default async function LayoutLangue({
       </head>
       <body className="flex min-h-full flex-col">
         <DonneesStructurees locale={locale} />
+        <SynchroniseurTheme />
         <NextIntlClientProvider>
           <FournisseurMouvement>{children}</FournisseurMouvement>
         </NextIntlClientProvider>
