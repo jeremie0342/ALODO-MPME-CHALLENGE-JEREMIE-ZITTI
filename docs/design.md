@@ -72,6 +72,12 @@ Ce n'est pas une inversion. Sur fond sombre, l'orange de marque perd en lisibili
 | Sans JavaScript  | thème clair, qui reste le cas d'usage principal                                                                                        |
 | Variante `dark:` | redéfinie pour suivre l'attribut et non la préférence système brute, sinon un choix manuel laisserait les primitives shadcn en arrière |
 
+### Pourquoi un effet de mise en page
+
+L'attribut vit sur la racine du document, hors de l'arbre React. Un changement de langue re-rend cette racine et le fait disparaître. Le réappliquer dans un effet passif ne suffit pas : un effet passif s'exécute **après** la peinture, si bien que le navigateur affiche d'abord une trame au mauvais thème avant de la corriger. Un effet de mise en page s'exécute avant, ce qui supprime la trame fautive au lieu de la rattraper.
+
+Un test échantillonne la couleur réellement peinte à chaque trame pendant la bascule et échoue dès qu'une seule s'écarte du thème choisi.
+
 ### Le logo
 
 La boucle sombre du logo disparaît sur fond sombre : seul l'anneau orange resterait visible. Un filtre CSS altérerait aussi l'orange, donc une variante est produite par `outils/generer-logo-sombre.mjs`, qui ne recolore que les pixels neutres et conserve le canal alpha. Les deux images sont rendues et permutées en CSS, ce qui évite tout clignotement.

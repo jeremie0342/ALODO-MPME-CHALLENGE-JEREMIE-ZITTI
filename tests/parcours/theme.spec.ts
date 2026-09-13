@@ -187,3 +187,54 @@ test.describe("persistance du theme", () => {
     await expect(page.locator("html")).toHaveAttribute("data-theme", "sombre");
   });
 });
+
+/**
+ * Reappliquer l'attribut ne suffit pas : dans un effet passif, la correction arrive
+ * apres la peinture et le navigateur affiche une trame au mauvais theme. Ce test
+ * echantillonne la couleur reellement peinte a chaque trame pendant la bascule.
+ */
+test.describe("absence de scintillement", () => {
+  for (const { systeme, cible } of [
+    { systeme: "light", cible: "sombre" },
+    { systeme: "dark", cible: "clair" },
+  ] as const) {
+    test.describe(`systeme ${systeme}`, () => {
+      test.use({ colorScheme: systeme });
+
+      test(`ne peint aucune trame hors du theme ${cible}`, async ({ page }) => {
+        await page.goto("/fr");
+
+        const bouton = page.getByRole("button", { name: /thème|theme/i });
+        for (let essai = 0; essai < 3; essai += 1) {
+          if ((await page.locator("html").getAttribute("data-theme")) === cible) break;
+          await bouton.click();
+        }
+        await expect(page.locator("html")).toHaveAttribute("data-theme", cible);
+
+        const attendu = await page.evaluate(() => getComputedStyle(document.body).backgroundColor);
+
+        await page.evaluate(() => {
+          const echantillons: string[] = [];
+          let rang = 0;
+          const relever = () => {
+            echantillons.push(getComputedStyle(document.body).backgroundColor);
+            if (rang++ < 40) requestAnimationFrame(relever);
+          };
+          requestAnimationFrame(relever);
+          Object.assign(window, { __echantillons: echantillons });
+        });
+
+        await page.getByRole("link", { name: "en", exact: true }).click();
+        await expect(page).toHaveURL(/\/en$/);
+        await page.waitForTimeout(900);
+
+        const echantillons = await page.evaluate(
+          () => (window as unknown as { __echantillons: string[] }).__echantillons,
+        );
+
+        expect(echantillons.length).toBeGreaterThan(10);
+        expect(echantillons.filter((fond) => fond !== attendu)).toEqual([]);
+      });
+    });
+  }
+});
