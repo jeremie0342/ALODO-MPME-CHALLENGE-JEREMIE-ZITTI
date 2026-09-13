@@ -15,6 +15,11 @@
     "sombre": "Dark theme",
     "basculer": "Change theme, switch to {vers}"
   },
+  "introuvable": {
+    "titre": "Page not found",
+    "texte": "This address does not match any screen of the diagnostic.",
+    "retour": "Back to home"
+  },
   "accueil": {
     "surtitre": "Credit readiness diagnostic",
     "titre": "Is your business ready for its first formal loan?",

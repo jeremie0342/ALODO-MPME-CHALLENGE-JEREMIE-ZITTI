@@ -15,6 +15,11 @@
     "sombre": "Thème sombre",
     "basculer": "Changer de thème, passer au {vers}"
   },
+  "introuvable": {
+    "titre": "Page introuvable",
+    "texte": "Cette adresse ne correspond à aucun écran du diagnostic.",
+    "retour": "Revenir à l'accueil"
+  },
   "accueil": {
     "surtitre": "Diagnostic de préparation au crédit",
     "titre": "Votre entreprise est-elle prête à obtenir son premier crédit formel ?",

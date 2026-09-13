@@ -13,7 +13,8 @@
     "test:parcours": "playwright test",
     "verifier": "npm run format:check && npm run lint && npm run test:unitaires && npm run build",
     "images:partage": "node outils/generer-images-partage.mjs",
-    "images:logo": "node outils/generer-logo-sombre.mjs"
+    "images:logo": "node outils/generer-logo-sombre.mjs",
+    "images:icone": "node outils/generer-icone.mjs"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",
