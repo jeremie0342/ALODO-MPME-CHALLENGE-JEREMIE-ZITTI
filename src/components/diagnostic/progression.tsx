@@ -1,7 +1,11 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { m } from "motion/react";
 import { Check } from "lucide-react";
+
+import { TRANSITION } from "@/animation/mouvement";
+import { useMouvementReduit } from "@/animation/use-mouvement-reduit";
 
 import { DIMENSIONS, QUESTIONS } from "@/domaine/questionnaire";
 import { estRepondue } from "@/domaine/scoring";
@@ -20,6 +24,7 @@ interface ProgressionProps {
  */
 export function BarreProgression({ indexCourant }: { readonly indexCourant: number }) {
   const t = useTranslations("diagnostic");
+  const mouvementReduit = useMouvementReduit();
   const total = QUESTIONS.length;
   const rang = indexCourant + 1;
   // Calé sur le rang et non sur les questions achevées : une barre vide sur la première
@@ -40,9 +45,11 @@ export function BarreProgression({ indexCourant }: { readonly indexCourant: numb
         aria-label={t("progression")}
         className="h-1 flex-1 overflow-hidden rounded-full bg-papier-creux"
       >
-        <div
-          className="h-full bg-signal transition-[width] duration-300 ease-out"
-          style={{ width: `${pourcentage}%` }}
+        <m.div
+          className="h-full bg-signal"
+          initial={false}
+          animate={{ width: `${pourcentage}%` }}
+          transition={mouvementReduit ? { duration: 0 } : TRANSITION}
         />
       </div>
     </div>

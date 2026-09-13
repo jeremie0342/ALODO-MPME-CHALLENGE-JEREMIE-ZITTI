@@ -1,4 +1,5 @@
 import {
+  BAREME_ENDETTEMENT,
   COEFFICIENTS_CONFIANCE,
   COEFFICIENT_CONFIANCE_DEFAUT,
   DIMENSION_DECOTEE,
@@ -65,20 +66,21 @@ export function pointsQuestion(question: Question, selection: readonly string[])
 }
 
 /**
- * Le risque tient au cumul des sources de remboursement, pas à leur nature prise isolément.
- * L'endettement informel pèse plus lourd que le formel : il est invisible de tout
- * autre système et échappe à l'encadrement.
+ * Applique le barème d'endettement. Le moteur ne porte que la forme de la règle,
+ * les valeurs vivent dans bareme.ts comme le reste de la politique de notation.
  */
 function pointsEndettement(question: Question, natures: readonly (string | undefined)[]): number {
   if (natures.includes("aucune")) return question.pointsMax;
 
   const sources = natures.filter((nature) => nature === "formelle" || nature === "informelle");
-
   if (sources.length === 0) return question.pointsMax;
-  if (sources.length >= 3) return 0;
-  if (sources.length === 2) return 6;
 
-  return sources[0] === "formelle" ? 18 : 12;
+  const palier = BAREME_ENDETTEMENT.cumul.find((entree) => sources.length >= entree.minimumSources);
+  if (palier) return palier.points;
+
+  return sources[0] === "formelle"
+    ? BAREME_ENDETTEMENT.sourceUnique.formelle
+    : BAREME_ENDETTEMENT.sourceUnique.informelle;
 }
 
 /**

@@ -4,7 +4,7 @@ import { useTranslations } from "next-intl";
 import { m } from "motion/react";
 import { AlertTriangle, ArrowUpRight, TrendingUp } from "lucide-react";
 
-import { TRANSITION_REVELATION } from "@/animation/mouvement";
+import { DELAI_REMPLISSAGE, TRANSITION_REVELATION } from "@/animation/mouvement";
 import { useDecompte } from "@/animation/use-decompte";
 import { useMouvementReduit } from "@/animation/use-mouvement-reduit";
 
@@ -104,7 +104,10 @@ export function DetailDimensions({
                 className={cn("h-full rounded-full", FOND_NIVEAU[niveau])}
                 initial={mouvementReduit ? false : { width: 0 }}
                 animate={{ width: `${entree.ajuste}%` }}
-                transition={{ ...TRANSITION_REVELATION, delay: mouvementReduit ? 0 : 0.15 }}
+                transition={{
+                  ...TRANSITION_REVELATION,
+                  delay: mouvementReduit ? 0 : DELAI_REMPLISSAGE,
+                }}
               />
             </div>
           </div>

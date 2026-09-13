@@ -1,4 +1,4 @@
-import type { NiveauConfiance, NiveauMaturite } from "./types";
+import type { NatureDette, NiveauConfiance, NiveauMaturite } from "./types";
 
 /**
  * Politique de notation, isolée du questionnaire.
@@ -38,6 +38,28 @@ export const PLAFOND_DEFAUT = 45;
 export const QUESTION_EXISTENCE_LEGALE = "q1-enregistrement";
 export const QUESTION_ORIGINE_CHIFFRE = "q6-origine";
 export const DIMENSION_DECOTEE = "finance";
+
+/**
+ * Points accordés sur la question des dettes.
+ *
+ * Le risque tient au cumul des sources de remboursement, pas à leur nature prise
+ * isolément. Une source informelle pèse plus lourd qu'une source formelle : elle est
+ * invisible de tout autre système et échappe à l'encadrement.
+ *
+ * L'absence de dette n'y figure pas : elle vaut le maximum de la question, lu sur la
+ * question elle-même pour ne pas dupliquer la valeur.
+ */
+export const BAREME_ENDETTEMENT = {
+  /** Une seule source : la nature décide. */
+  sourceUnique: { formelle: 18, informelle: 12 } as Readonly<
+    Record<Exclude<NatureDette, "aucune">, number>
+  >,
+  /** Au-delà d'une source, le cumul prime sur la nature. Lu du plus grave au moins grave. */
+  cumul: [
+    { minimumSources: 3, points: 0 },
+    { minimumSources: 2, points: 6 },
+  ] as readonly { readonly minimumSources: number; readonly points: number }[],
+} as const;
 
 /** Bornes basses de chaque niveau de maturité, lues de la plus haute à la plus basse. */
 export const SEUILS_MATURITE: readonly {

@@ -37,6 +37,12 @@ export const TRANSITION_REVELATION: Transition = {
 /** Décalage entre deux éléments d'une même série. */
 export const CASCADE = 0.07;
 
+/**
+ * Attente avant que les barres par dimension ne se remplissent, le temps que le score
+ * ait commencé à monter. Les deux mouvements se liraient autrement comme concurrents.
+ */
+export const DELAI_REMPLISSAGE = 0.15;
+
 /** Distance de translation, faible : le contenu glisse, il ne voyage pas. */
 const GLISSEMENT = 14;
 
