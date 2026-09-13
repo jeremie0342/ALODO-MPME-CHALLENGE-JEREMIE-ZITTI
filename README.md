@@ -123,8 +123,23 @@ Ce qui a été volontairement laissé de côté.
 - **Aucune authentification, aucun tableau de bord.**
 - **Les seuils et les poids sont posés à dire d'expert**, pas calibrés sur des données. Ils ne le seront qu'après la première cohorte.
 - **Le score reste déclaratif.** Rien ne vérifie les réponses, ce qui est exactement le rôle de l'indice de confiance.
-- **Thème clair uniquement**, et contraste vérifié à l'œil plutôt qu'à l'outil.
+- **Le contraste est vérifié à l'œil**, pas à l'outil.
+- **Deux langues seulement.** Les langues nationales du Bénin ne sont pas couvertes, alors qu'une partie de la cible ne lit couramment ni le français ni l'anglais.
+- **Les images de partage sont générées à la main** par un script, et non à la volée : à relancer si un titre change.
 - **Le diagnostic est supposé auto-administré.** S'il est passé par un analyste en entretien, l'interface doit devenir un outil de saisie rapide.
+
+## Au-delà de la consigne
+
+Le sujet invite à « proposer au-delà de la consigne sans perdre le périmètre ». Ces quatre ajouts ne sont pas des ornements : chacun répond à un élément du dossier ALODO.
+
+| Ajout                            | Ce qui le justifie                                                                                                                                                                                                                                                                                             |
+| -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Bilingue français et anglais** | ALODO affiche une ambition panafricaine et COINAI cible déjà BRVM, JSE, NGX et NSE Kenya, soit des marchés anglophones. Un diagnostic monolingue plafonne au Bénin. L'anglais est une localisation et non une traduction : le RCCM et l'IFU sont glosés, la tontine devient _savings group (tontine or susu)_. |
+| **Aperçu de lien soigné**        | ALODO distribue par bot WhatsApp, où un lien partagé s'affiche sous forme de carte. L'aperçu est donc la première vue du produit pour une MPME qui reçoit le lien.                                                                                                                                             |
+| **Thème sombre**                 | Les jetons étant déjà centralisés, il n'a touché aucun composant. C'est la vérification de l'affirmation d'architecture, pas une coquetterie.                                                                                                                                                                  |
+| **Mouvement**                    | Quatre moments seulement. Le principal : un score qui s'installe se lit comme une mesure en train d'être relevée, là où un nombre posé d'emblée se lit comme une affirmation.                                                                                                                                  |
+
+Le bilingue a eu un effet secondaire plus important que lui-même : il a forcé à sortir toute formulation du domaine. `questionnaire.ts` ne porte plus que des identifiants, des points et des règles ; le moteur de score n'a pas changé d'une ligne pour devenir traduisible.
 
 ## 7. Améliorations
 
