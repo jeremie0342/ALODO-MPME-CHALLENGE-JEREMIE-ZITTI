@@ -15,7 +15,8 @@
     "images:partage": "node outils/generer-images-partage.mjs",
     "images:logo": "node outils/generer-logo-sombre.mjs",
     "images:icone": "node outils/generer-icone.mjs",
-    "demonstration": "node outils/enregistrer-demonstration.mjs"
+    "demonstration": "node outils/enregistrer-demonstration.mjs",
+    "note:pdf": "node outils/generer-pdf-note.mjs"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",
