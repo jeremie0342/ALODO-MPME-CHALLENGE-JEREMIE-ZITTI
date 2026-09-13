@@ -4,6 +4,8 @@ Prototype de l'étape Diagnostic du programme ALODO MPME. Dix questions, un scor
 
 **Démo : https://alodo-mpme-challenge-jeremie-zitti.vercel.app**
 
+**Vidéos :** [parcours sur bureau, 1 min 28](demonstration/bureau.mp4) · [parcours sur mobile, 36 s](demonstration/mobile.mp4)
+
 ## 1. Présentation
 
 Une application web de trois écrans qui évalue la capacité d'une micro, petite ou moyenne entreprise à obtenir un **premier crédit formel**.

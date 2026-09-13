@@ -52,3 +52,6 @@ AGENTS.md
 /playwright-report/
 /blob-report/
 /.playwright/
+
+# sources webm des demonstrations, seuls les mp4 sont livres
+/demonstration/*.webm
