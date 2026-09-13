@@ -1,8 +1,12 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { AnimatePresence, m } from "motion/react";
 import { useEffect } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+
+import { TRANSITION, VARIANTES_QUESTION } from "@/animation/mouvement";
+import { useMouvementReduit } from "@/animation/use-mouvement-reduit";
 
 import { BoutonSortie } from "@/components/diagnostic/bouton-sortie";
 import { ChampQuestion } from "@/components/diagnostic/champ-question";
@@ -29,6 +33,7 @@ export default function PageDiagnostic() {
     pret,
     repondu,
     termine,
+    versAvant,
     repondre,
     basculer,
     suivante,
@@ -36,6 +41,7 @@ export default function PageDiagnostic() {
   } = useDiagnostic();
 
   const derniere = indexCourant === nombreQuestions - 1;
+  const mouvementReduit = useMouvementReduit();
 
   useEffect(() => {
     if (termine) router.push("/diagnostic/resultat");
@@ -69,26 +75,40 @@ export default function PageDiagnostic() {
             </aside>
 
             <div className="min-w-0">
-              <EtiquetteDimension dimension={question.dimension} />
+              <AnimatePresence mode="wait" custom={versAvant} initial={false}>
+                <m.div
+                  key={question.id}
+                  custom={versAvant}
+                  variants={mouvementReduit ? undefined : VARIANTES_QUESTION}
+                  initial="entree"
+                  animate="presente"
+                  exit="sortie"
+                  transition={TRANSITION}
+                >
+                  <EtiquetteDimension dimension={question.dimension} />
 
-              <h1 className="mt-4 font-display text-2xl leading-[1.15] text-balance text-encre sm:text-3xl lg:text-4xl">
-                {tQuestions(`${question.id}.intitule`)}
-              </h1>
+                  <h1 className="mt-4 font-display text-2xl leading-[1.15] text-balance text-encre sm:text-3xl lg:text-4xl">
+                    {tQuestions(`${question.id}.intitule`)}
+                  </h1>
 
-              {question.avecAide && (
-                <p className="mt-3 text-sm text-encre-attenue">
-                  {tQuestions(`${question.id}.aide`)}
-                </p>
-              )}
+                  {question.avecAide && (
+                    <p className="mt-3 text-sm text-encre-attenue">
+                      {tQuestions(`${question.id}.aide`)}
+                    </p>
+                  )}
 
-              <div className="mt-8">
-                <ChampQuestion
-                  question={question}
-                  selection={reponses[question.id] ?? []}
-                  onChoisir={(selection) => repondre(question.id, selection)}
-                  onBasculer={(optionId, exclusive) => basculer(question.id, optionId, exclusive)}
-                />
-              </div>
+                  <div className="mt-8">
+                    <ChampQuestion
+                      question={question}
+                      selection={reponses[question.id] ?? []}
+                      onChoisir={(selection) => repondre(question.id, selection)}
+                      onBasculer={(optionId, exclusive) =>
+                        basculer(question.id, optionId, exclusive)
+                      }
+                    />
+                  </div>
+                </m.div>
+              </AnimatePresence>
 
               {sousQuestion && principaleRepondue && (
                 <section className="mt-10 border-t border-trait pt-8">

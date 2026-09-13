@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 import { RotateCcw } from "lucide-react";
 
+import { Revelation, Serie } from "@/animation/revelation";
 import { SqueletteQuestion } from "@/components/diagnostic/squelette";
 import { Contenu, EnTete, PiedDePage } from "@/components/mise-en-page/cadre";
 import {
@@ -64,15 +65,21 @@ export default function PageResultat() {
               )}
             </section>
 
-            <div className="grid gap-4">
-              <BlocPointFort resultat={resultat} />
-              <BlocFrein resultat={resultat} />
-            </div>
+            <Serie className="grid gap-4">
+              <Revelation>
+                <BlocPointFort resultat={resultat} />
+              </Revelation>
+              <Revelation>
+                <BlocFrein resultat={resultat} />
+              </Revelation>
+            </Serie>
           </div>
 
-          <div className="mt-12">
-            <BlocRecommandation resultat={resultat} />
-          </div>
+          <Serie className="mt-12">
+            <Revelation>
+              <BlocRecommandation resultat={resultat} />
+            </Revelation>
+          </Serie>
 
           <div className="mt-12 flex flex-wrap items-center gap-3 border-t border-trait pt-8">
             <Button variant="outline" onClick={recommencer}>

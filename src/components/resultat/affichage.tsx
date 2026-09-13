@@ -1,7 +1,12 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { m } from "motion/react";
 import { AlertTriangle, ArrowUpRight, TrendingUp } from "lucide-react";
+
+import { TRANSITION_REVELATION } from "@/animation/mouvement";
+import { useDecompte } from "@/animation/use-decompte";
+import { useMouvementReduit } from "@/animation/use-mouvement-reduit";
 
 import { DIMENSIONS } from "@/domaine/questionnaire";
 import { niveauMaturite } from "@/domaine/scoring";
@@ -30,6 +35,8 @@ export function MesureScore({ resultat }: { readonly resultat: Resultat }) {
   const t = useTranslations("resultat");
   const tMaturite = useTranslations("maturite");
   const tConfiance = useTranslations("confiance");
+  const mouvementReduit = useMouvementReduit();
+  const affiche = useDecompte(resultat.score, !mouvementReduit);
 
   return (
     <div className="flex flex-wrap items-end gap-x-8 gap-y-4">
@@ -40,7 +47,7 @@ export function MesureScore({ resultat }: { readonly resultat: Resultat }) {
             TEINTE_NIVEAU[resultat.niveau],
           )}
         >
-          {resultat.score}
+          {affiche}
         </span>
         <span className="font-display text-3xl leading-none text-encre-discrete sm:text-4xl">
           {t("surCent")}
@@ -70,6 +77,7 @@ export function DetailDimensions({
   readonly dimensions: readonly ScoreDimension[];
 }) {
   const t = useTranslations("dimensions");
+  const mouvementReduit = useMouvementReduit();
 
   return (
     <dl className="grid gap-5">
@@ -92,9 +100,11 @@ export function DetailDimensions({
             </div>
 
             <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-papier-creux">
-              <div
+              <m.div
                 className={cn("h-full rounded-full", FOND_NIVEAU[niveau])}
-                style={{ width: `${entree.ajuste}%` }}
+                initial={mouvementReduit ? false : { width: 0 }}
+                animate={{ width: `${entree.ajuste}%` }}
+                transition={{ ...TRANSITION_REVELATION, delay: mouvementReduit ? 0 : 0.15 }}
               />
             </div>
           </div>

@@ -1,6 +1,13 @@
 "use client";
 
-import { createContext, useCallback, useContext, useMemo, useSyncExternalStore } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+  useSyncExternalStore,
+} from "react";
 
 import { QUESTIONS } from "@/domaine/questionnaire";
 import { calculerResultat, estRepondue } from "@/domaine/scoring";
@@ -23,6 +30,8 @@ interface ValeurContexte {
   readonly pret: boolean;
   readonly repondu: boolean;
   readonly termine: boolean;
+  /** Sens du dernier déplacement, pour orienter la transition entre questions. */
+  readonly versAvant: boolean;
   readonly resultat: Resultat;
   repondre: (questionId: string, selection: readonly string[]) => void;
   basculer: (questionId: string, optionId: string, exclusive: boolean) => void;
@@ -39,6 +48,13 @@ const FAUX = () => false;
 export function FournisseurDiagnostic({ children }: { children: React.ReactNode }) {
   const session = useSyncExternalStore(souscrire, instantane, instantaneServeur);
   const pret = useSyncExternalStore(souscrire, VRAI, FAUX);
+
+  /*
+    La direction est une propriété de l'action, pas une déduction du rendu : la comparer
+    à l'index précédent obligerait à lire une ref pendant le rendu, ce qui devient faux
+    en rendu concurrent.
+  */
+  const [versAvant, setVersAvant] = useState(true);
 
   const repondre = useCallback((questionId: string, selection: readonly string[]) => {
     majSession((courante) => ({
@@ -63,6 +79,7 @@ export function FournisseurDiagnostic({ children }: { children: React.ReactNode 
   }, []);
 
   const suivante = useCallback(() => {
+    setVersAvant(true);
     majSession((courante) =>
       courante.indexCourant >= QUESTIONS.length - 1
         ? { ...courante, termine: true }
@@ -71,6 +88,7 @@ export function FournisseurDiagnostic({ children }: { children: React.ReactNode 
   }, []);
 
   const precedente = useCallback(() => {
+    setVersAvant(false);
     majSession((courante) => ({
       ...courante,
       indexCourant: Math.max(0, courante.indexCourant - 1),
@@ -78,6 +96,7 @@ export function FournisseurDiagnostic({ children }: { children: React.ReactNode 
   }, []);
 
   const recommencer = useCallback(() => {
+    setVersAvant(true);
     reinitialiserSession();
   }, []);
 
@@ -94,6 +113,7 @@ export function FournisseurDiagnostic({ children }: { children: React.ReactNode 
       pret,
       repondu: estRepondue(question, session.reponses),
       termine: session.termine,
+      versAvant,
       resultat,
       repondre,
       basculer,
@@ -106,6 +126,7 @@ export function FournisseurDiagnostic({ children }: { children: React.ReactNode 
       indexCourant,
       question,
       pret,
+      versAvant,
       resultat,
       repondre,
       basculer,

@@ -107,7 +107,11 @@ URL_CIBLE=https://alodo-mpme-challenge-jeremie-zitti.vercel.app npm run test:par
 - Point fort, frein principal, recommandation locale exécutable.
 - Avertissement explicite quand le plafond légal contraint le score.
 - Responsive, cibles tactiles de 56 px, aucun débordement horizontal.
-- 49 tests unitaires et 38 tests de parcours.
+- Bilingue français et anglais, avec négociation selon le navigateur.
+- Thèmes clair et sombre, suivant la préférence système par défaut.
+- Mouvement motivé, désactivé quand le système demande à le réduire.
+- Aperçu de lien, sitemap et données structurées.
+- 60 tests unitaires et 109 tests de parcours.
 
 ## 6. Limites
 

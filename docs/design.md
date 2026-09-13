@@ -75,3 +75,23 @@ Ce n'est pas une inversion. Sur fond sombre, l'orange de marque perd en lisibili
 ### Le logo
 
 La boucle sombre du logo disparaît sur fond sombre : seul l'anneau orange resterait visible. Un filtre CSS altérerait aussi l'orange, donc une variante est produite par `outils/generer-logo-sombre.mjs`, qui ne recolore que les pixels neutres et conserve le canal alpha. Les deux images sont rendues et permutées en CSS, ce qui évite tout clignotement.
+
+## Mouvement
+
+Le mouvement sert à situer l'utilisateur et à donner au score le poids d'une mesure. Il ne décore jamais. Les jetons de durée et de courbe sont centralisés dans `src/animation/mouvement.ts`, comme les couleurs le sont dans `globals.css`.
+
+| Moment                     | Rôle                                                                                                                                |
+| -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| Transition entre questions | Glissement court dont le sens suit la navigation : on comprend qu'on avance ou qu'on revient sans avoir à le lire                   |
+| Décompte du score          | Un score qui s'installe se lit comme une mesure en train d'être relevée, là où un nombre posé d'emblée se lit comme une affirmation |
+| Remplissage des barres     | Prolonge la même idée sur le détail par dimension                                                                                   |
+| Révélation des blocs       | Cascade légère, pour hiérarchiser la lecture du résultat                                                                            |
+
+### Contraintes
+
+- **Seules l'opacité et la translation sont animées.** Ce sont les deux propriétés que le compositeur traite sans recalculer la mise en page, ce qui compte sur un téléphone d'entrée de gamme.
+- **`prefers-reduced-motion` est respecté.** Le réglage est utilisé par les personnes sujettes au mal des transports et aux troubles vestibulaires : quand il est actif, tout apparaît à l'état final, score compris.
+- **Aucune animation au défilement**, qui retarderait la lecture sur réseau lent.
+- **`LazyMotion` avec le sous-ensemble `domAnimation`**, et les composants `m` plutôt que `motion` : seul le nécessaire est chargé.
+
+La direction de la transition est portée par l'action de navigation et non déduite d'une comparaison d'index pendant le rendu, ce qui serait faux en rendu concurrent.

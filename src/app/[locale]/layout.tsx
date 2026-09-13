@@ -9,6 +9,7 @@ import { MARQUE } from "@/lib/marque";
 import { URL_SITE } from "@/lib/site";
 import { SCRIPT_ANTI_CLIGNOTEMENT } from "@/etat/theme";
 
+import { FournisseurMouvement } from "@/animation/fournisseur";
 import { DonneesStructurees } from "@/components/seo/donnees-structurees";
 
 import "../globals.css";
@@ -113,7 +114,9 @@ export default async function LayoutLangue({
       </head>
       <body className="flex min-h-full flex-col">
         <DonneesStructurees locale={locale} />
-        <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        <NextIntlClientProvider>
+          <FournisseurMouvement>{children}</FournisseurMouvement>
+        </NextIntlClientProvider>
       </body>
     </html>
   );
