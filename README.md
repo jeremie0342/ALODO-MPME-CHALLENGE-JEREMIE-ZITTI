@@ -73,6 +73,12 @@ Toutes les couleurs, polices et rayons sont déclarés dans `src/app/globals.css
 
 Des tests scannent les sources et font échouer la vérification si une couleur repart en dur. Voir [`docs/design.md`](docs/design.md).
 
+### Outillage
+
+Ce projet a été développé avec l'assistance d'un modèle de langage, utilisé pour la production du code et de la documentation.
+
+Les décisions de conception sont les miennes et sont justifiées dans ce document : le choix des trois dimensions, la sélection des questions, le plafond imposé par l'existence légale, la décote de la dimension financière et le choix du frein par écart pondéré. Je peux expliquer chaque partie du code soumis.
+
 ## 4. Installation
 
 Node 20 ou supérieur.
